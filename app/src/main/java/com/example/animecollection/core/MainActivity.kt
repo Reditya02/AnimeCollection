@@ -1,4 +1,4 @@
-package com.example.animecollection
+package com.example.animecollection.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
