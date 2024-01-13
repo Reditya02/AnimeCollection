@@ -11,33 +11,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.animecollection.ui.theme.AnimeCollectionTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AnimeCollectionTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }
 }
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun Greeting(
+    navigator: DestinationsNavigator,
+) {
+    Text(text = "Hello World!")
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AnimeCollectionTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    AnimeCollectionTheme {
+//        Greeting()
+//    }
+//}
