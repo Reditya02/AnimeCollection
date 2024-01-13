@@ -35,11 +35,3 @@ fun Greeting(
 ) {
     Text(text = "Hello World!")
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    AnimeCollectionTheme {
-//        Greeting()
-//    }
-//}
