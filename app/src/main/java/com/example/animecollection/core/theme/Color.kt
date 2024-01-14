@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.theme
+package com.example.animecollection.core.theme
 
 import androidx.compose.ui.graphics.Color
 

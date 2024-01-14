@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.theme
+package com.example.animecollection.core.theme
 
 import android.app.Activity
 import android.os.Build

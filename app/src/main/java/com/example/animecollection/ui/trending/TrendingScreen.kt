@@ -22,7 +22,7 @@ import coil.size.Size
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.AListAnime
 import com.example.animecollection.ui.destinations.DetailScreenDestination
-import com.example.animecollection.ui.theme.AnimeCollectionTheme
+import com.example.animecollection.core.theme.AnimeCollectionTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
