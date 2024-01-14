@@ -20,6 +20,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.animecollection.domain.model.Anime
+import com.example.animecollection.ui.component.AListAnime
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.example.animecollection.ui.theme.AnimeCollectionTheme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -75,69 +76,3 @@ fun TrendingContent(
     }
 
 }
-
-@Composable
-fun AListAnime(
-    modifier: Modifier = Modifier,
-    anime: Anime
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp, 4.dp)
-    ) {
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(anime.image)
-                .size(Size.ORIGINAL)
-                .build()
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                modifier = Modifier
-                    .weight(0.3f)
-                    .aspectRatio(1f),
-                painter = painter,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(
-                modifier = Modifier.weight(0.7f)
-            ) {
-                Text(text = anime.title)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = anime.rating)
-
-            }
-        }
-    }
-}
-
-val dummyListAnimeData = listOf(
-    Anime(
-        id = "0",
-        image = "https://media.kitsu.io/anime/45857/poster_image/medium-b9c3b3f613b0c12453409ef9ee41d5ec.jpeg",
-        title = "JJK",
-        rating = "12"
-    ),
-    Anime(
-        id = "0",
-        image = "https://media.kitsu.io/anime/45857/poster_image/medium-b9c3b3f613b0c12453409ef9ee41d5ec.jpeg",
-        title = "JJK 2",
-        rating = "12"
-    ),
-    Anime(
-        id = "0",
-        image = "https://media.kitsu.io/anime/45857/poster_image/medium-b9c3b3f613b0c12453409ef9ee41d5ec.jpeg",
-        title = "JJK 3",
-        rating = "12"
-    ),
-)
