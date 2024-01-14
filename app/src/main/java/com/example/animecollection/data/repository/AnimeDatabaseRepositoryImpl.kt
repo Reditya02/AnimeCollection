@@ -1,5 +1,6 @@
 package com.example.animecollection.data.repository
 
+import android.util.Log
 import com.example.animecollection.core.UIState
 import com.example.animecollection.data.remote.RemoteDatasources
 import com.example.animecollection.data.remote.response.ApiResponse
@@ -24,7 +25,12 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDetailAnime(id: String): Flow<UIState<AnimeDetail>> {
-        TODO("Not yet implemented")
+    override fun getDetailAnime(id: String): Flow<UIState<AnimeDetail>> = flow {
+        emit(UIState.Loading())
+        when (val response = datasources.getDetailAnime(id).first()) {
+            ApiResponse.Empty -> emit(UIState.Error("No Data"))
+            is ApiResponse.Error -> emit(UIState.Error(response.message))
+            is ApiResponse.Success -> emit(UIState.Success(DataMapper.mapAnimeDetailResponseToAnimeDetailLocal(response.data)))
+        }
     }
 }

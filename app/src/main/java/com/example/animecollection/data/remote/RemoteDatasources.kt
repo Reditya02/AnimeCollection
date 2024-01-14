@@ -1,5 +1,6 @@
 package com.example.animecollection.data.remote
 
+import com.example.animecollection.data.remote.response.AnimeDetailResponse
 import com.example.animecollection.data.remote.response.AnimeResponse
 import com.example.animecollection.data.remote.response.ApiResponse
 import kotlinx.coroutines.Dispatchers
@@ -28,4 +29,16 @@ class RemoteDatasources @Inject constructor(
             emit(ApiResponse.Error("Cannot connect to server"))
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getDetailAnime(id: String): Flow<ApiResponse<AnimeDetailResponse>> = flow {
+        val response = apiService.getDetailAnime(id)
+        val body = response.body()
+        if (response.isSuccessful && body != null) {
+            emit(ApiResponse.Success(body))
+        } else {
+            emit(ApiResponse.Error(response.message()))
+        }
+    }.catch {
+        emit(ApiResponse.Error("Cannot connect to server"))
+    }.flowOn(Dispatchers.IO)
 }

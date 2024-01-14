@@ -2,6 +2,7 @@ package com.example.animecollection.module
 
 import com.example.animecollection.data.repository.AnimeDatabaseRepositoryImpl
 import com.example.animecollection.domain.usecase.GetAllAnimeUseCase
+import com.example.animecollection.domain.usecase.GetDetailAnimeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,4 +16,9 @@ object UseCaseModule {
     @Singleton
     fun providesGetAllAnimeUseCase(repositoryImpl: AnimeDatabaseRepositoryImpl) =
         GetAllAnimeUseCase(repositoryImpl)
+
+    @Provides
+    @Singleton
+    fun providesGetDetailAnimeUseCase(repositoryImpl: AnimeDatabaseRepositoryImpl) =
+        GetDetailAnimeUseCase(repositoryImpl)
 }
