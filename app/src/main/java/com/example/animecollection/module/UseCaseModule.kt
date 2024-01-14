@@ -1,8 +1,12 @@
 package com.example.animecollection.module
 
 import com.example.animecollection.data.repository.AnimeDatabaseRepositoryImpl
+import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
+import com.example.animecollection.domain.repository.ILocaleRepository
 import com.example.animecollection.domain.usecase.GetAllAnimeUseCase
 import com.example.animecollection.domain.usecase.GetDetailAnimeUseCase
+import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
+import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,11 +18,21 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun providesGetAllAnimeUseCase(repositoryImpl: AnimeDatabaseRepositoryImpl) =
-        GetAllAnimeUseCase(repositoryImpl)
+    fun providesGetAllAnimeUseCase(repository: IAnimeDatabaseRepository) =
+        GetAllAnimeUseCase(repository)
 
     @Provides
     @Singleton
-    fun providesGetDetailAnimeUseCase(repositoryImpl: AnimeDatabaseRepositoryImpl) =
-        GetDetailAnimeUseCase(repositoryImpl)
+    fun providesGetDetailAnimeUseCase(repository: IAnimeDatabaseRepository) =
+        GetDetailAnimeUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesChangeThemeUseCase(repository: ILocaleRepository) =
+        ChangeThemeUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesGetThemeUseCase(repository: ILocaleRepository) =
+        GetIsDarkThemeUseCase(repository)
 }

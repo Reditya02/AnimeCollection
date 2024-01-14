@@ -4,6 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,6 +18,7 @@ import com.example.animecollection.ui.component.AErrorMessage
 import com.example.animecollection.ui.component.AListAnime
 import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.destinations.DetailScreenDestination
+import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -34,10 +38,11 @@ fun TrendingScreen(
             TrendingContent(
                 listData = state.listAnime,
                 message = state.message,
-                isLoading = state.isLoading
-            ) {
-                navigator.navigate(DetailScreenDestination(it))
-            }
+                isLoading = state.isLoading,
+                onCardClick = { navigator.navigate(DetailScreenDestination(it)) },
+                onSettingsClicked = { navigator.navigate(SettingsScreenDestination) },
+
+            )
         }
     }
 }
@@ -47,12 +52,18 @@ fun TrendingContent(
     listData: List<Anime>,
     message: String,
     isLoading: Boolean,
-    onCardClick: (String) -> Unit
+    onCardClick: (String) -> Unit,
+    onSettingsClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Trending Anime") }
+                title = { Text(text = "Trending Anime") },
+                actions = {
+                    IconButton(onClick = { onSettingsClicked() }) {
+                        Icon(Icons.Default.Settings, contentDescription = null)
+                    }
+                }
             )
         },
     ) {

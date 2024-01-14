@@ -1,5 +1,7 @@
 package com.example.animecollection.module
 
+import com.example.animecollection.data.locale.LocaleDatasources
+import com.example.animecollection.data.locale.SharedPref
 import com.example.animecollection.data.remote.ApiService
 import com.example.animecollection.data.remote.RemoteDatasources
 import dagger.Module
@@ -14,4 +16,8 @@ object DatasourceModule {
     @Provides
     @Singleton
     fun providesRemoteDatasources(apiService: ApiService) = RemoteDatasources(apiService)
+
+    @Provides
+    @Singleton
+    fun providesLocalseDatasources(pref: SharedPref) = LocaleDatasources(pref)
 }
