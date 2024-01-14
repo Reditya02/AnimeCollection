@@ -16,29 +16,27 @@ import com.example.animecollection.ui.component.AListAnime
 import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@RootNavGraph(start = true)
 @Destination
 @Composable
 fun TrendingScreen(
     navigator: DestinationsNavigator,
     viewModel: TrendingViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsState().value
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column {
+            val state = viewModel.state.collectAsState().value
+
             TrendingContent(
                 listData = state.listAnime,
                 message = state.message,
                 isLoading = state.isLoading
             ) {
-                navigator.navigate(DetailScreenDestination)
+                navigator.navigate(DetailScreenDestination(it))
             }
         }
     }
@@ -49,7 +47,7 @@ fun TrendingContent(
     listData: List<Anime>,
     message: String,
     isLoading: Boolean,
-    onCardClick: () -> Unit
+    onCardClick: (String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -68,7 +66,7 @@ fun TrendingContent(
                 ALoadingAnimation()
             else if (listData.isNotEmpty())
                 ListTrendingAnime(listData = listData) {
-                    onCardClick()
+                    onCardClick(it)
                 }
             else
                 AErrorMessage(message = message)
@@ -79,13 +77,13 @@ fun TrendingContent(
 @Composable
 fun ListTrendingAnime(
     listData: List<Anime>,
-    onCardClick: () -> Unit
+    onCardClick: (String) -> Unit
 ) {
     LazyColumn(
         content = {
             items(listData) {
                 AListAnime(
-                    modifier = Modifier.clickable { onCardClick() },
+                    modifier = Modifier.clickable { onCardClick(it.id) },
                     anime = it
                 )
             }
