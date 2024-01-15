@@ -45,12 +45,6 @@ fun SplashScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            Image(
-//                modifier = Modifier
-//                    .aspectRatio(1f),
-//                painter = painterResource(id = R.drawable.logo_white),
-//                contentDescription = ""
-//            )
             val composition by rememberLottieComposition(
                 spec = LottieCompositionSpec.RawRes(R.raw.anim_loading)
             )

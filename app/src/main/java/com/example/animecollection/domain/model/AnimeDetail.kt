@@ -7,5 +7,6 @@ data class AnimeDetail(
     val titleJp: String,
     val rating: String,
     val synopsis: String,
-    val genre: List<String>
+    val genre: List<String>,
+    val characters: List<AnimeCharacter>
 )

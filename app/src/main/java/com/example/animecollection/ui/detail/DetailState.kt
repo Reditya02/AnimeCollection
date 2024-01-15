@@ -11,6 +11,7 @@ data class DetailState(
         titleJp = "",
         synopsis = "",
         genre = listOf(),
+        characters = listOf()
     ),
     val isLoading: Boolean = false,
     val message: String = ""

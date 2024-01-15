@@ -1,8 +1,7 @@
 package com.example.animecollection.data.remote
 
-import com.example.animecollection.data.remote.response.AnimeDetailResponse
-import com.example.animecollection.data.remote.response.AnimeResponse
-import com.example.animecollection.data.remote.response.ApiResponse
+import android.util.Log
+import com.example.animecollection.data.remote.response.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -38,6 +37,39 @@ class RemoteDatasources @Inject constructor(
         } else {
             emit(ApiResponse.Error(response.message()))
         }
+    }.catch {
+        emit(ApiResponse.Error("Cannot connect to server"))
+    }.flowOn(Dispatchers.IO)
+
+    fun getGenre(id: String): Flow<ApiResponse<AnimeGenreResponse>> = flow {
+        val response = apiService.getGenre(id)
+        val body = response.body()
+        if (response.isSuccessful && body != null)
+            emit(ApiResponse.Success(body))
+        else
+            emit(ApiResponse.Error(response.message()))
+    }.catch {
+        emit(ApiResponse.Error("Cannot connect to server"))
+    }.flowOn(Dispatchers.IO)
+
+    fun getCharacterId(id: String): Flow<ApiResponse<AnimeCharacterIdResponse>> = flow {
+        val response = apiService.getCharacterId(id)
+        val body = response.body()
+        if (response.isSuccessful && body != null)
+            emit(ApiResponse.Success(body))
+        else
+            emit(ApiResponse.Error(response.message()))
+    }.catch {
+        emit(ApiResponse.Error("Cannot connect to server"))
+    }.flowOn(Dispatchers.IO)
+
+    fun getCharacter(id: String): Flow<ApiResponse<AnimeCharacterResponse>> = flow {
+        val response = apiService.getCharacter(id)
+        val body = response.body()
+        if (response.isSuccessful && body != null)
+            emit(ApiResponse.Success(body))
+        else
+            emit(ApiResponse.Error(response.message()))
     }.catch {
         emit(ApiResponse.Error("Cannot connect to server"))
     }.flowOn(Dispatchers.IO)
