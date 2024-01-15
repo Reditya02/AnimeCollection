@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.animecollection"
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -47,7 +47,8 @@ android {
                 "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                 "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-                "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
+                "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         ]
     }
     buildFeatures {
@@ -81,6 +82,12 @@ dependencies {
 
     //Lottie
     implementation "com.airbnb.android:lottie-compose:5.2.0"
+
+    // Material Icon Extended
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    // Splash Screen API
+    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 
     //Destination
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.8.42-beta'
