@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.detail
+package com.example.animecollection.ui.detail.model
 
 import com.example.animecollection.domain.model.AnimeDetail
 
@@ -10,9 +10,8 @@ data class DetailState(
         titleEn = "",
         titleJp = "",
         synopsis = "",
-        genre = listOf(),
-        characters = listOf()
+        genre = listOf()
     ),
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val message: String = ""
 )

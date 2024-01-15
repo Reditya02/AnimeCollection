@@ -15,11 +15,13 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.R
 
 @Composable
-fun ALoadingAnimation() {
+fun ALoadingAnimation(
+    modifier: Modifier = Modifier
+) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_loading))
 
     Column(
-        Modifier.fillMaxSize(),
+        modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(4f))

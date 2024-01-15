@@ -21,19 +21,17 @@ object DataMapper {
 
     fun mapAnimeDetailResponseToAnimeDetailLocal(
         response: AnimeDetailResponse,
-        genre: AnimeGenreResponse,
-        characters: List<AnimeCharacter>
+        genre: AnimeGenreResponse
     ): AnimeDetail =
         response.data.attributes.run {
             AnimeDetail(
                 posterImage = posterImage.tiny,
                 coverImage = coverImage.tiny,
-                titleEn = titles.en,
+                titleEn = titles.en ?: titles.enJp,
                 titleJp = titles.enJp,
                 rating = averageRating,
                 synopsis = synopsis,
-                genre = mapGenreResponse(genre),
-                characters = characters
+                genre = mapGenreResponse(genre)
             )
         }
 

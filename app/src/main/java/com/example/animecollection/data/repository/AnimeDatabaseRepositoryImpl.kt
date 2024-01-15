@@ -23,7 +23,13 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
         when (val response = datasources.getListTrendingAnime().first()) {
             ApiResponse.Empty -> emit(UIState.Error("No Data"))
             is ApiResponse.Error -> emit(UIState.Error(response.message))
-            is ApiResponse.Success -> emit(UIState.Success(DataMapper.mapAnimeResponseToAnimeLocal(response.data)))
+            is ApiResponse.Success -> emit(
+                UIState.Success(
+                    DataMapper.mapAnimeResponseToAnimeLocal(
+                        response.data
+                    )
+                )
+            )
         }
     }
 
@@ -33,33 +39,33 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
             ApiResponse.Empty -> emit(UIState.Error("No Data"))
             is ApiResponse.Error -> emit(UIState.Error(response.message))
             is ApiResponse.Success -> {
-
-                val genre = datasources.getGenre(id).first()
-                val characterList = getCharacter(id).first()
-
-                if (genre is ApiResponse.Success)
-                    when (genre ) {
+                when (val genre = datasources.getGenre(id).first()) {
                     ApiResponse.Empty -> emit(UIState.Error("No Data"))
                     is ApiResponse.Error -> emit(UIState.Error("Error"))
-                    is ApiResponse.Success -> emit(UIState.Success(DataMapper.mapAnimeDetailResponseToAnimeDetailLocal(
-                        response.data,
-                        genre.data,
-                        characterList
-                    )))
+                    is ApiResponse.Success -> emit(
+                        UIState.Success(
+                            DataMapper.mapAnimeDetailResponseToAnimeDetailLocal(
+                                response.data,
+                                genre.data
+                            )
+                        )
+                    )
                 }
             }
         }
     }
 
-    private fun getCharacter(id: String): Flow<List<AnimeCharacter>> = flow {
+    override fun getAnimeCharacter(id: String): Flow<UIState<List<AnimeCharacter>>> = flow {
         val result: MutableList<AnimeCharacter> = mutableListOf()
+        var isResponsevalid = false
         val characterId = datasources.getCharacterId(id).first()
         if (characterId is ApiResponse.Success) {
             characterId.data.data.take(6).map {
-                when(val char = datasources.getCharacter(it.id).first()) {
-                    ApiResponse.Empty -> Log.d("Reditya", "char empty")
-                    is ApiResponse.Error -> Log.d("Reditya", "char error ${it.id} ${char.message}")
+                when (val char = datasources.getCharacter(it.id).first()) {
+                    ApiResponse.Empty -> emit(UIState.Error("No Data"))
+                    is ApiResponse.Error -> emit(UIState.Error("Error"))
                     is ApiResponse.Success -> {
+                        isResponsevalid = true
                         val charData = char.data.data.attributes
                         result.add(
                             AnimeCharacter(
@@ -70,7 +76,8 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
                     }
                 }
             }
-            emit(result)
+            if (isResponsevalid)
+                emit(UIState.Success(result))
         }
     }
 }
