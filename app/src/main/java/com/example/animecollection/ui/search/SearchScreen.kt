@@ -1,6 +1,6 @@
-package com.example.animecollection.ui
+package com.example.animecollection.ui.search
 
-import android.app.appsearch.AppSearchManager.SearchContext
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.AErrorMessage
 import com.example.animecollection.ui.component.AListAnime
@@ -22,7 +20,7 @@ import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.component.CompSearchBar
 import com.example.animecollection.ui.component.bottombar.BottomNavGraph
 import com.example.animecollection.ui.component.bottombar.RootNavigator
-import com.example.animecollection.ui.search.SearchViewModel
+import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 
 @BottomNavGraph
@@ -45,7 +43,8 @@ fun SearchScreen(
                 isLoading = state.isLoading,
                 query = state.query,
                 onSearch = { viewModel.search(it) },
-                onSearchTextFieldChanged = { viewModel.onSearchtextFieldvalueChanged(it) }
+                onSearchTextFieldChanged = { viewModel.onSearchtextFieldvalueChanged(it) },
+                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
             )
         }
     }
@@ -58,7 +57,8 @@ fun SearchContent(
     isLoading: Boolean,
     query: String,
     onSearch: (String) -> Unit,
-    onSearchTextFieldChanged: (String) -> Unit
+    onSearchTextFieldChanged: (String) -> Unit,
+    onCardClick: (String) -> Unit
 ) {
     Scaffold {
         Column(
@@ -74,7 +74,10 @@ fun SearchContent(
             else {
                 LazyColumn {
                     items(listData) {
-                        AListAnime(anime = it)
+                        AListAnime(
+                            modifier = Modifier.clickable { onCardClick(it.id) },
+                            anime = it
+                        )
                     }
                 }
             }
