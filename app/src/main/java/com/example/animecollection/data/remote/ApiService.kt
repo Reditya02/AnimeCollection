@@ -4,6 +4,7 @@ import com.example.animecollection.data.remote.response.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @GET("trending/anime")
@@ -28,4 +29,9 @@ interface ApiService {
     suspend fun getCharacter(
         @Path("id") id: String
     ): Response<AnimeCharacterResponse>
+
+    @GET("anime?")
+    suspend fun getSearchedAnime(
+        @Query("filter[text]") query: String
+    ): Response<SearchedAnimeResponse>
 }

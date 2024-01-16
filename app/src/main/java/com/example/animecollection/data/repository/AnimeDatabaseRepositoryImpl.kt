@@ -80,4 +80,19 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
                 emit(UIState.Success(result))
         }
     }
+
+    override fun searchAnime(query: String): Flow<UIState<List<Anime>>> = flow {
+        emit(UIState.Loading())
+        when (val response = datasources.getSearchedAnime(query).first()) {
+            ApiResponse.Empty -> emit(UIState.Error("No Data"))
+            is ApiResponse.Error -> emit(UIState.Error(response.message))
+            is ApiResponse.Success -> emit(
+                UIState.Success(
+                    DataMapper.mapSearchedAnimeResponseToAnimeLocal(
+                        response.data
+                    )
+                )
+            )
+        }
+    }
 }

@@ -73,4 +73,15 @@ class RemoteDatasources @Inject constructor(
     }.catch {
         emit(ApiResponse.Error("Cannot connect to server"))
     }.flowOn(Dispatchers.IO)
+
+    fun getSearchedAnime(query: String): Flow<ApiResponse<SearchedAnimeResponse>> = flow {
+        val response = apiService.getSearchedAnime(query)
+        val body = response.body()
+        if (response.isSuccessful && body != null)
+            emit(ApiResponse.Success(body))
+        else
+            emit(ApiResponse.Error(response.message()))
+    }.catch { e ->
+        emit(ApiResponse.Error("Cannot connect to server"))
+    }.flowOn(Dispatchers.IO)
 }

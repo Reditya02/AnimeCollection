@@ -5,6 +5,7 @@ import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
 import com.example.animecollection.domain.repository.ILocaleRepository
 import com.example.animecollection.domain.usecase.GetAllAnimeUseCase
 import com.example.animecollection.domain.usecase.GetDetailAnimeUseCase
+import com.example.animecollection.domain.usecase.GetSearchedAnimeUseCase
 import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
 import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
 import dagger.Module
@@ -35,4 +36,9 @@ object UseCaseModule {
     @Singleton
     fun providesGetThemeUseCase(repository: ILocaleRepository) =
         GetIsDarkThemeUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesGetSearchedAnimeUseCase(repository: IAnimeDatabaseRepository) =
+        GetSearchedAnimeUseCase(repository)
 }
