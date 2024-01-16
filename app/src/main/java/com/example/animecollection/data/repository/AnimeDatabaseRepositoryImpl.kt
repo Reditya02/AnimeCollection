@@ -70,4 +70,15 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override fun getGenre(id: String): Flow<UIState<List<String>>> = flow {
+        emit(UIState.Loading())
+        when (val response = datasources.getGenre(id).first()) {
+            ApiResponse.Empty -> emit(UIState.Error("No Data"))
+            is ApiResponse.Error -> emit(UIState.Error(response.message))
+            is ApiResponse.Success -> emit(
+                UIState.Success(response.data.data.map { it.attributes.name })
+            )
+        }
+    }
 }

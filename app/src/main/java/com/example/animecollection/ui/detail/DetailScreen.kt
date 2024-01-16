@@ -31,6 +31,7 @@ import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.AErrorMessage
 import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
+import com.example.animecollection.ui.detail.model.GenreState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -42,20 +43,20 @@ fun DetailScreen(
     anime: Anime
 ) {
     viewModel.getAnimeCharacter(anime.id)
+    viewModel.getGenre(anime.id)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column {
-            val state = viewModel.state.collectAsState().value
             val characterState = viewModel.characterState.collectAsState().value
+            val genre = viewModel.genreState.collectAsState().value
 
             DetailContent(
                 anime = anime,
-                message = state.message,
-                isLoading = state.isLoading,
                 character = characterState,
+                genre = genre
             ) {
                 navigator.popBackStack()
             }
@@ -66,9 +67,8 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     anime: Anime,
-    message: String,
-    isLoading: Boolean,
     character: AnimeCharacterState,
+    genre: GenreState,
     onBackClick: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
@@ -102,7 +102,7 @@ fun DetailContent(
                     AnimeTitle(anime = anime)
                 }
                 item {
-                    DetailAnime(anime = anime, character = character)
+                    DetailAnime(anime = anime, character = character, genre = genre)
                 }
             }
 
@@ -190,6 +190,7 @@ fun AnimeTitle(
 fun DetailAnime(
     anime: Anime,
     character: AnimeCharacterState,
+    genre: GenreState
 ) {
     val posterImage = remember {
         anime.posterImage
@@ -216,7 +217,7 @@ fun DetailAnime(
                 modifier = Modifier.weight(7f)
             ) {
                 FlowRow {
-                    anime.genre.forEach {
+                    genre.genre.forEach() {
                         Card(
                             modifier = Modifier
                                 .padding(2.dp)

@@ -3,6 +3,7 @@ package com.example.animecollection.module
 import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
 import com.example.animecollection.domain.repository.ILocaleRepository
 import com.example.animecollection.domain.usecase.GetAllAnimeUseCase
+import com.example.animecollection.domain.usecase.GetGenreUseCase
 import com.example.animecollection.domain.usecase.GetSearchedAnimeUseCase
 import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
 import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
@@ -34,4 +35,9 @@ object UseCaseModule {
     @Singleton
     fun providesGetSearchedAnimeUseCase(repository: IAnimeDatabaseRepository) =
         GetSearchedAnimeUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesGetGenreUseCase(repository: IAnimeDatabaseRepository) =
+        GetGenreUseCase(repository)
 }
