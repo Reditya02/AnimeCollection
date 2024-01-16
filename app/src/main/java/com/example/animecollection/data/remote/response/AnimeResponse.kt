@@ -200,22 +200,22 @@ data class Genres(
 data class PosterImage(
 
 	@field:SerializedName("small")
-	val small: String,
+	val small: String? = null,
 
 	@field:SerializedName("original")
-	val original: String,
+	val original: String? = null,
 
 	@field:SerializedName("large")
-	val large: String,
+	val large: String? = null,
 
 	@field:SerializedName("tiny")
-	val tiny: String,
+	val tiny: String? = null,
 
 	@field:SerializedName("meta")
-	val meta: Meta,
+	val meta: Meta? = null,
 
 	@field:SerializedName("medium")
-	val medium: String
+	val medium: String? = null
 )
 
 data class Meta(
@@ -254,10 +254,10 @@ data class Attributes(
 	val youtubeVideoId: String,
 
 	@field:SerializedName("averageRating")
-	val averageRating: String,
+	val averageRating: String? = null,
 
 	@field:SerializedName("coverImage")
-	val coverImage: CoverImage,
+	val coverImage: CoverImage? = null,
 
 	@field:SerializedName("ratingFrequencies")
 	val ratingFrequencies: RatingFrequencies,
@@ -332,16 +332,16 @@ data class Tiny(
 data class Titles(
 
 	@field:SerializedName("en")
-	val en: String,
+	val en: String? = null,
 
 	@field:SerializedName("ja_jp")
-	val jaJp: String,
+	val jaJp: String? = null,
 
 	@field:SerializedName("en_jp")
-	val enJp: String,
+	val enJp: String? = null,
 
 	@field:SerializedName("en_us")
-	val enUs: String,
+	val enUs: String? = null,
 
 	@field:SerializedName("it_it")
 	val itIt: String,
@@ -425,19 +425,19 @@ data class Installments(
 data class CoverImage(
 
 	@field:SerializedName("small")
-	val small: String,
+	val small: String? = null,
 
 	@field:SerializedName("original")
-	val original: String,
+	val original: String? = null,
 
 	@field:SerializedName("large")
-	val large: String,
+	val large: String? = null,
 
 	@field:SerializedName("tiny")
-	val tiny: String,
+	val tiny: String? = null,
 
 	@field:SerializedName("meta")
-	val meta: Meta
+	val meta: Meta? = null
 )
 
 data class Mappings(

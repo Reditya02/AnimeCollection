@@ -28,7 +28,7 @@ fun AListAnime(
     ) {
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(anime.image)
+                .data(anime.posterImage)
                 .size(Size.ORIGINAL)
                 .build()
         )
@@ -52,7 +52,7 @@ fun AListAnime(
             Column(
                 modifier = Modifier.weight(0.7f)
             ) {
-                Text(text = anime.title)
+                Text(text = anime.titleEn)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = anime.rating)
             }

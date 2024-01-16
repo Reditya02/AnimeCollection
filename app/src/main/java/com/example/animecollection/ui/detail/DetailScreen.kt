@@ -1,18 +1,14 @@
 package com.example.animecollection.ui.detail
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material3.*
@@ -23,33 +19,29 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.animecollection.R
-import com.example.animecollection.domain.model.AnimeDetail
+import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.AErrorMessage
 import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.coroutineScope
 
 @Destination
 @Composable
 fun DetailScreen(
     navigator: DestinationsNavigator,
     viewModel: DetailViewModel = hiltViewModel(),
-    id: String
+    anime: Anime
 ) {
-    viewModel.getDetailAnime(id)
+    viewModel.getAnimeCharacter(anime.id)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -60,7 +52,7 @@ fun DetailScreen(
             val characterState = viewModel.characterState.collectAsState().value
 
             DetailContent(
-                anime = state.anime,
+                anime = anime,
                 message = state.message,
                 isLoading = state.isLoading,
                 character = characterState,
@@ -73,7 +65,7 @@ fun DetailScreen(
 
 @Composable
 fun DetailContent(
-    anime: AnimeDetail,
+    anime: Anime,
     message: String,
     isLoading: Boolean,
     character: AnimeCharacterState,
@@ -86,37 +78,31 @@ fun DetailContent(
 
     Scaffold {
         Box {
-            if (isLoading)
-                ALoadingAnimation()
-            else if (message.isNotEmpty())
-                AErrorMessage(message = message)
-            else {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(it),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    state = lazyListState
-                ) {
-                    item {
-                        val coverImage = remember {
-                            anime.coverImage
-                        }
+            LazyColumn(
+                modifier = Modifier
+                    .padding(it),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                state = lazyListState
+            ) {
+                item {
+                    val coverImage = remember {
+                        anime.coverImage
+                    }
 
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(3f),
-                            model = coverImage,
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    item {
-                        AnimeTitle(anime = anime)
-                    }
-                    item {
-                        DetailAnime(anime = anime, character = character)
-                    }
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(3f),
+                        model = coverImage,
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                item {
+                    AnimeTitle(anime = anime)
+                }
+                item {
+                    DetailAnime(anime = anime, character = character)
                 }
             }
 
@@ -182,7 +168,7 @@ fun CompDetailTopBar(
 
 @Composable
 fun AnimeTitle(
-    anime: AnimeDetail
+    anime: Anime
 ) {
     Text(
         text = anime.titleEn,
@@ -202,7 +188,7 @@ fun AnimeTitle(
 
 @Composable
 fun DetailAnime(
-    anime: AnimeDetail,
+    anime: Anime,
     character: AnimeCharacterState,
 ) {
     val posterImage = remember {

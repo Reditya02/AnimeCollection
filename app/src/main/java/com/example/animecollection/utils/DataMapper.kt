@@ -5,8 +5,6 @@ import com.example.animecollection.data.remote.response.AnimeGenreResponse
 import com.example.animecollection.data.remote.response.AnimeResponse
 import com.example.animecollection.data.remote.response.SearchedAnimeResponse
 import com.example.animecollection.domain.model.Anime
-import com.example.animecollection.domain.model.AnimeCharacter
-import com.example.animecollection.domain.model.AnimeDetail
 
 object DataMapper {
     fun mapAnimeResponseToAnimeLocal(listData: AnimeResponse): List<Anime> =
@@ -14,9 +12,13 @@ object DataMapper {
             val anime = result.attributes
             Anime(
                 id = result.id,
-                image = anime.posterImage.tiny,
-                title = anime.canonicalTitle,
-                rating = anime.averageRating
+                posterImage = anime.posterImage.run { small ?: original ?: tiny ?: large ?: ""},
+                coverImage = anime.coverImage?.run { small ?: original ?: tiny ?: large ?: ""} ?: "",
+                titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
+                titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
+                rating = anime.averageRating ?: "-",
+                synopsis = anime.synopsis,
+                genre = listOf()
             )
         }
 
@@ -25,24 +27,29 @@ object DataMapper {
             val anime = result.attributes
             Anime(
                 id = result.id,
-                image = anime.posterImage.tiny,
-                title = anime.canonicalTitle,
-                rating = anime.averageRating ?: "0"
+                posterImage = anime.posterImage.run { small ?: original ?: tiny ?: large ?: ""},
+                coverImage = anime.coverImage?.run { small ?: original ?: tiny ?: large ?: ""} ?: "",
+                titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
+                titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
+                rating = anime.averageRating ?: "-",
+                synopsis = anime.synopsis,
+                genre = listOf()
             )
         }
 
     fun mapAnimeDetailResponseToAnimeDetailLocal(
         response: AnimeDetailResponse,
         genre: AnimeGenreResponse
-    ): AnimeDetail =
+    ): Anime =
         response.data.attributes.run {
-            AnimeDetail(
+            Anime(
+                id = response.data.id,
                 posterImage = posterImage.tiny ?: "",
-                coverImage = coverImage.tiny ?: "",
-                titleEn = titles.en ?: titles.enJp,
+                coverImage = coverImage?.tiny ?: "",
+                titleEn = titles.en ?: titles.enJp ?: "",
                 titleJp = titles.enJp ?: "",
                 rating = averageRating ?: "",
-                synopsis = synopsis ?: "",
+                synopsis = synopsis,
                 genre = mapGenreResponse(genre)
             )
         }

@@ -38,15 +38,3 @@ data class SearchedMeta(
 	@field:SerializedName("dimensions")
 	val dimensions: Dimensions
 )
-
-data class SearchedTitles(
-
-	@field:SerializedName("en")
-	val en: String? = null,
-
-	@field:SerializedName("ja_jp")
-	val jaJp: String? = null,
-
-	@field:SerializedName("en_jp")
-	val enJp: String? = null
-)

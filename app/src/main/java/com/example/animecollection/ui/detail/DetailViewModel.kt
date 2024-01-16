@@ -52,7 +52,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun getAnimeCharacter(id: String) = viewModelScope.launch {
+    fun getAnimeCharacter(id: String) = viewModelScope.launch {
         getAnimeCharacterUseCase(id).collectLatest { uiState ->
             when(uiState) {
                 is UIState.Error -> _characterState.update { it.copy(

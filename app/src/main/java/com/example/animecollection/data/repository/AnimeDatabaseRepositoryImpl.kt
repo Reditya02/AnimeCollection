@@ -1,13 +1,10 @@
 package com.example.animecollection.data.repository
 
-import android.util.Log
 import com.example.animecollection.core.UIState
 import com.example.animecollection.data.remote.RemoteDatasources
 import com.example.animecollection.data.remote.response.ApiResponse
-import com.example.animecollection.data.remote.response.CharacterData
-import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.model.AnimeCharacter
-import com.example.animecollection.domain.model.AnimeDetail
+import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
 import com.example.animecollection.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +30,7 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDetailAnime(id: String): Flow<UIState<AnimeDetail>> = flow {
+    override fun getDetailAnime(id: String): Flow<UIState<Anime>> = flow {
         emit(UIState.Loading())
         when (val response = datasources.getDetailAnime(id).first()) {
             ApiResponse.Empty -> emit(UIState.Error("No Data"))

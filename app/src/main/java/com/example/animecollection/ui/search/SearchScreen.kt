@@ -58,7 +58,7 @@ fun SearchContent(
     query: String,
     onSearch: (String) -> Unit,
     onSearchTextFieldChanged: (String) -> Unit,
-    onCardClick: (String) -> Unit
+    onCardClick: (Anime) -> Unit
 ) {
     Scaffold {
         Column(
@@ -75,7 +75,7 @@ fun SearchContent(
                 LazyColumn {
                     items(listData) {
                         AListAnime(
-                            modifier = Modifier.clickable { onCardClick(it.id) },
+                            modifier = Modifier.clickable { onCardClick(it) },
                             anime = it
                         )
                     }

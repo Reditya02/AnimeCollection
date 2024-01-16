@@ -1,9 +1,10 @@
 package com.example.animecollection.ui.detail.model
 
-import com.example.animecollection.domain.model.AnimeDetail
+import com.example.animecollection.domain.model.Anime
 
 data class DetailState(
-    val anime: AnimeDetail = AnimeDetail(
+    val anime: Anime = Anime(
+        id = "",
         rating = "",
         posterImage = "",
         coverImage = "",
