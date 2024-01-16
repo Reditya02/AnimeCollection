@@ -141,10 +141,14 @@ fun CompDetailTopBar(
         transitionSpec = {
             fadeIn(animationSpec = spring(
                 dampingRatio = Spring.DampingRatioNoBouncy,
-                stiffness = Spring.StiffnessVeryLow,
+                stiffness = Spring.StiffnessLow,
                 visibilityThreshold = null
             )) with
-                    fadeOut(animationSpec = tween(100))
+                    fadeOut(animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMedium,
+                        visibilityThreshold = null
+                    ))
         },
     ) { scrolled1 ->
         Row(
