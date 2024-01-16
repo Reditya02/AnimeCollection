@@ -30,28 +30,6 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDetailAnime(id: String): Flow<UIState<Anime>> = flow {
-        emit(UIState.Loading())
-        when (val response = datasources.getDetailAnime(id).first()) {
-            ApiResponse.Empty -> emit(UIState.Error("No Data"))
-            is ApiResponse.Error -> emit(UIState.Error(response.message))
-            is ApiResponse.Success -> {
-                when (val genre = datasources.getGenre(id).first()) {
-                    ApiResponse.Empty -> emit(UIState.Error("No Data"))
-                    is ApiResponse.Error -> emit(UIState.Error("Error"))
-                    is ApiResponse.Success -> emit(
-                        UIState.Success(
-                            DataMapper.mapAnimeDetailResponseToAnimeDetailLocal(
-                                response.data,
-                                genre.data
-                            )
-                        )
-                    )
-                }
-            }
-        }
-    }
-
     override fun getAnimeCharacter(id: String): Flow<UIState<List<AnimeCharacter>>> = flow {
         val result: MutableList<AnimeCharacter> = mutableListOf()
         var isResponsevalid = false

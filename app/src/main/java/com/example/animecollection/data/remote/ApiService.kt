@@ -10,11 +10,6 @@ interface ApiService {
     @GET("trending/anime")
     suspend fun getListTrendingAnime(): Response<AnimeResponse>
 
-    @GET("anime/{id}")
-    suspend fun getDetailAnime(
-        @Path("id") id: String
-    ): Response<AnimeDetailResponse>
-
     @GET("anime/{id}/genres")
     suspend fun getGenre(
         @Path("id") id: String

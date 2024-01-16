@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IAnimeDatabaseRepository {
     fun getAllAnime(): Flow<UIState<List<Anime>>>
-    fun getDetailAnime(id: String): Flow<UIState<Anime>>
     fun getAnimeCharacter(id: String): Flow<UIState<List<AnimeCharacter>>>
     fun searchAnime(query: String): Flow<UIState<List<Anime>>>
 }

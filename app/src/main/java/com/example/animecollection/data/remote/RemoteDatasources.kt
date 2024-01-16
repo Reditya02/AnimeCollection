@@ -29,18 +29,6 @@ class RemoteDatasources @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getDetailAnime(id: String): Flow<ApiResponse<AnimeDetailResponse>> = flow {
-        val response = apiService.getDetailAnime(id)
-        val body = response.body()
-        if (response.isSuccessful && body != null) {
-            emit(ApiResponse.Success(body))
-        } else {
-            emit(ApiResponse.Error(response.message()))
-        }
-    }.catch {
-        emit(ApiResponse.Error("Cannot connect to server"))
-    }.flowOn(Dispatchers.IO)
-
     fun getGenre(id: String): Flow<ApiResponse<AnimeGenreResponse>> = flow {
         val response = apiService.getGenre(id)
         val body = response.body()
