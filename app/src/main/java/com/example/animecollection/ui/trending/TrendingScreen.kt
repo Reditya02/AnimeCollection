@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.animecollection.domain.model.Anime
-import com.example.animecollection.ui.BottomNavGraph
-import com.example.animecollection.ui.NavGraphs
 import com.example.animecollection.ui.component.AErrorMessage
 import com.example.animecollection.ui.component.AListAnime
 import com.example.animecollection.ui.component.ALoadingAnimation
+import com.example.animecollection.ui.component.bottombar.BottomNavGraph
+import com.example.animecollection.ui.component.bottombar.RootNavigator
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -30,7 +30,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun TrendingScreen(
-    navigator: DestinationsNavigator,
+    navigator: RootNavigator,
     viewModel: TrendingViewModel = hiltViewModel()
 ) {
     Surface(
@@ -44,8 +44,8 @@ fun TrendingScreen(
                 listData = state.listAnime,
                 message = state.message,
                 isLoading = state.isLoading,
-                onCardClick = { navigator.navigate(DetailScreenDestination(it)) },
-                onSettingsClicked = { navigator.navigate(SettingsScreenDestination) },
+                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) },
+                onSettingsClicked = { navigator.value.navigate(SettingsScreenDestination) },
 
             )
         }
