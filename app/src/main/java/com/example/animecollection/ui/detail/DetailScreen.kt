@@ -1,20 +1,32 @@
 package com.example.animecollection.ui.detail
 
+import android.graphics.Rect
 import android.util.Log
+import android.view.View
+import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +40,7 @@ import com.example.animecollection.ui.component.ALoadingAnimation
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.coroutineScope
 
 @Destination
 @Composable
@@ -51,7 +64,9 @@ fun DetailScreen(
                 message = state.message,
                 isLoading = state.isLoading,
                 character = characterState,
-            )
+            ) {
+                navigator.popBackStack()
+            }
         }
     }
 }
@@ -62,37 +77,123 @@ fun DetailContent(
     message: String,
     isLoading: Boolean,
     character: AnimeCharacterState,
+    onBackClick: () -> Unit
 ) {
-    Log.d("Reditya", "Detail Content $character")
-    Scaffold() {
-        if (isLoading)
-            ALoadingAnimation()
-        else if (message.isNotEmpty())
-            AErrorMessage(message = message)
-        else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                val coverImage = remember {
-                    anime.coverImage
+    val lazyListState = rememberLazyListState()
+    val scrolledAppBar = remember {
+        derivedStateOf { lazyListState.firstVisibleItemIndex == 0 }
+    }
+
+    Scaffold {
+        Box {
+            if (isLoading)
+                ALoadingAnimation()
+            else if (message.isNotEmpty())
+                AErrorMessage(message = message)
+            else {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(it),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    state = lazyListState
+                ) {
+                    item {
+                        val coverImage = remember {
+                            anime.coverImage
+                        }
+
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(3f),
+                            model = coverImage,
+                            contentDescription = "",
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    item {
+                        AnimeTitle(anime = anime)
+                    }
+                    item {
+                        DetailAnime(anime = anime, character = character)
+                    }
                 }
+            }
 
-                AsyncImage(
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = painterResource(id = R.drawable.ic_launcher_background),
-                    model = coverImage,
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
+            CompDetailTopBar(
+                onBackClick = { onBackClick() },
+                title = anime.titleEn,
+                scrolled = scrolledAppBar.value
+            )
+        }
+
+    }
+}
+
+@Composable
+fun CompDetailTopBar(
+    onBackClick: () -> Unit,
+    title: String,
+    scrolled: Boolean
+) {
+    AnimatedContent(
+        targetState = scrolled,
+        transitionSpec = {
+            fadeIn(animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessVeryLow,
+                visibilityThreshold = null
+            )) with
+                    fadeOut(animationSpec = tween(100))
+        },
+    ) { scrolled1 ->
+        Row(
+            modifier = Modifier
+                .background(if (scrolled1) Color.Transparent else MaterialTheme.colorScheme.primary)
+                .fillMaxWidth()
+                .padding(8.dp)
+                .aspectRatio(8f),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { onBackClick() }) {
+                Icon(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background, CircleShape),
+                    imageVector = Icons.Default.ChevronLeft,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
-
-                DetailAnime(anime = anime, character = character)
+            }
+            if (!scrolled1) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }
+}
+
+@Composable
+fun AnimeTitle(
+    anime: AnimeDetail
+) {
+    Text(
+        text = anime.titleEn,
+        style = MaterialTheme.typography.titleLarge
+    )
+    Text(
+        modifier = Modifier
+            .padding(start = 8.dp)
+            .alpha(0.8f),
+        text = anime.titleJp,
+        fontStyle = FontStyle.Italic,
+        style = MaterialTheme.typography.titleMedium
+    )
+
+    Spacer(modifier = Modifier.height(8.dp))
 }
 
 @Composable
@@ -100,7 +201,6 @@ fun DetailAnime(
     anime: AnimeDetail,
     character: AnimeCharacterState,
 ) {
-    Log.d("Reditya", "Detail Anime $character")
     val posterImage = remember {
         anime.posterImage
     }
@@ -109,21 +209,6 @@ fun DetailAnime(
             .fillMaxWidth()
             .padding(12.dp)
     ) {
-
-        Text(
-            text = anime.titleEn,
-            style = MaterialTheme.typography.titleLarge
-        )
-        Text(
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .alpha(0.8f),
-            text = anime.titleJp,
-            fontStyle = FontStyle.Italic,
-            style = MaterialTheme.typography.titleMedium
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
         Row(
             Modifier.fillMaxWidth()
         ) {
@@ -131,7 +216,6 @@ fun DetailAnime(
                 modifier = Modifier
                     .weight(4f)
                     .clip(MaterialTheme.shapes.medium),
-                placeholder = painterResource(id = R.drawable.ic_launcher_background),
                 model = posterImage,
                 contentDescription = "",
                 contentScale = ContentScale.Crop
@@ -173,7 +257,6 @@ fun DetailAnime(
 fun AnimeCharacter(
     characterData: AnimeCharacterState
 ) {
-    Log.d("Reditya", "character $characterData")
     characterData.apply {
         Column {
             Text(text = "Character")
@@ -210,4 +293,23 @@ fun AnimeCharacter(
             }
         }
     }
+}
+
+fun Modifier.visibilityPercentage(callback: (Float) -> Unit): Modifier {
+    return composed {
+        val view = LocalView.current.parent as View
+        onGloballyPositioned {
+            callback(visibilityPercentage(view))
+        }
+    }
+}
+
+fun visibilityPercentage(view: View): Float {
+    if (!view.isAttachedToWindow) return 0f
+    val rect = Rect()
+    if (!view.getLocalVisibleRect(rect)) return 0f
+    val totalArea = (view.height * view.width).toFloat()
+    if (totalArea == 0f) return 0f
+    val visibleArea = (rect.bottom - rect.top) * (rect.right - rect.left)
+    return visibleArea / totalArea
 }

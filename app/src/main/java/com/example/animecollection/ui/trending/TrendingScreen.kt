@@ -64,11 +64,6 @@ fun TrendingContent(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(text = "Trending Anime") },
-                actions = {
-                    IconButton(onClick = { onSettingsClicked() }) {
-                        Icon(Icons.Default.Settings, contentDescription = null)
-                    }
-                }
             )
         }
     ) {

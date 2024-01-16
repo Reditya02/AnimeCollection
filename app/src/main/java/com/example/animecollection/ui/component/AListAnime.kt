@@ -55,7 +55,6 @@ fun AListAnime(
                 Text(text = anime.title)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = anime.rating)
-
             }
         }
     }
