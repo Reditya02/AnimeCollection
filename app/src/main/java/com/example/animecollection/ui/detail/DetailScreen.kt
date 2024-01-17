@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.animecollection.domain.model.Anime
-import com.example.animecollection.ui.component.AErrorMessage
-import com.example.animecollection.ui.component.ALoadingAnimation
+import com.example.animecollection.ui.component.CompErrorMessage
+import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
 import com.example.animecollection.ui.detail.model.GenreState
 import com.ramcosta.composedestinations.annotation.Destination
@@ -40,6 +40,7 @@ fun DetailScreen(
 ) {
     viewModel.getAnimeCharacter(anime.id)
     viewModel.getGenre(anime.id)
+    viewModel.checkIsFavorite(anime.id  )
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -48,13 +49,15 @@ fun DetailScreen(
         Column {
             val characterState = viewModel.characterState.collectAsState().value
             val genre = viewModel.genreState.collectAsState().value
+            val isFavorite = viewModel.isFavorite.collectAsState().value
 
             DetailContent(
                 anime = anime,
                 character = characterState,
                 genre = genre,
                 onBackClick = { navigator.popBackStack() },
-                onFavoriteClicked = { viewModel.addFavorite(it) }
+                onFavoriteClicked = { viewModel.addFavorite(it) },
+                isFavorite = isFavorite
             )
         }
     }
@@ -66,7 +69,8 @@ fun DetailContent(
     character: AnimeCharacterState,
     genre: GenreState,
     onBackClick: () -> Unit,
-    onFavoriteClicked: (Anime) -> Unit
+    onFavoriteClicked: (Anime) -> Unit,
+    isFavorite: Boolean
 ) {
     val lazyListState = rememberLazyListState()
     val scrolledAppBar = remember {
@@ -108,6 +112,7 @@ fun DetailContent(
                 title = anime.titleEn,
                 scrolled = scrolledAppBar.value,
                 onFavoriteClicked = { onFavoriteClicked(anime) },
+                isFavorite = isFavorite
             )
         }
 
@@ -119,7 +124,8 @@ fun CompDetailTopBar(
     onBackClick: () -> Unit,
     title: String,
     scrolled: Boolean,
-    onFavoriteClicked: () -> Unit
+    onFavoriteClicked: () -> Unit,
+    isFavorite: Boolean
 ) {
     AnimatedContent(
         targetState = scrolled,
@@ -170,7 +176,7 @@ fun CompDetailTopBar(
                             .padding(2.dp),
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
-                        tint = Color.White
+                        tint = if (isFavorite) Color.Yellow else Color.White
                     )
                 }
             }
@@ -229,7 +235,7 @@ fun DetailAnime(
                 modifier = Modifier.weight(7f)
             ) {
                 FlowRow {
-                    genre.genre.forEach() {
+                    genre.genre.forEach {
                         Card(
                             modifier = Modifier
                                 .padding(2.dp)
@@ -264,9 +270,9 @@ fun AnimeCharacter(
         Column {
             Text(text = "Character")
             if (isLoading)
-                ALoadingAnimation(Modifier.padding(120.dp, 40.dp))
+                CompLoadingAnimation(Modifier.padding(120.dp, 40.dp))
             else if (message.isNotEmpty())
-                AErrorMessage(message = message)
+                CompErrorMessage(message = message)
             else {
                 LazyRow(
                     content = {

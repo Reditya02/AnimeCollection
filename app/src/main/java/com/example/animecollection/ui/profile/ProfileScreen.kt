@@ -28,6 +28,9 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.domain.model.User
 import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
+import com.example.animecollection.domain.model.Anime
+import com.example.animecollection.ui.destinations.DetailScreenDestination
+import com.example.animecollection.ui.trending.ListTrendingAnime
 import com.google.firebase.storage.FirebaseStorage
 import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.tasks.await
@@ -43,92 +46,106 @@ fun ProfileScreen(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        val state = viewModel.state.collectAsState().value
-        ProfileContent(
-            isLoading = state.isLoading,
-            userData = state.data
-        )
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text(text = "Profile") }
+                )
+            }
+        ) {
+            Column(Modifier.padding(it)) {
+                val state = viewModel.state.collectAsState().value
+                ProfileContent(
+                    isLoading = state.isLoading,
+                    userData = state.data
+                )
+                ListFavorite(
+                    listData = state.listFavorite,
+                    onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
+                )
+            }
+        }
+
     }
 }
 
 @Composable
 fun ProfileContent(
     isLoading: Boolean,
-    userData: User
+    userData: User,
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Profile") }
-            )
-        }
-    ) {
-        if (!isLoading) {
-            Column(Modifier.padding(it)) {
-                Row {
-                    var url by remember {
-                        mutableStateOf(Uri.parse(""))
-                    }
+    if (!isLoading) {
+        Column {
+            Row {
+                var url by remember {
+                    mutableStateOf(Uri.parse(""))
+                }
 
-                    val painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(url.toString())
-                            .size(ORIGINAL)
-                            .build()
+                val painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(url.toString())
+                        .size(ORIGINAL)
+                        .build()
+                )
+
+                LaunchedEffect(Unit) {
+                    val storage = FirebaseStorage.getInstance().reference
+                    url = storage.child(userData.photo).downloadUrl.await()
+                }
+
+                Spacer(modifier = Modifier.weight(0.3f))
+                if (painter.state is AsyncImagePainter.State.Success) {
+                    Image(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .weight(0.4f)
+                            .aspectRatio(1f),
+                        painter = painter,
+                        contentDescription = "description",
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    val composition by rememberLottieComposition(
+                        spec = LottieCompositionSpec.RawRes(R.raw.anim_loading)
                     )
 
-                    Log.d("Reditya", userData.toString())
-
-                    LaunchedEffect(Unit) {
-                        val storage = FirebaseStorage.getInstance().reference
-                        url = storage.child(userData.photo).downloadUrl.await()
-                    }
-
-                    Spacer(modifier = Modifier.weight(0.3f))
-                    if (painter.state is AsyncImagePainter.State.Success) {
-                        Image(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .weight(0.4f)
-                                .aspectRatio(1f),
-                            painter = painter,
-                            contentDescription = "description",
-                            contentScale = ContentScale.Crop
-                        )
-                    } else {
-                        val composition by rememberLottieComposition(
-                            spec = LottieCompositionSpec.RawRes(R.raw.anim_loading)
-                        )
-
-                        LottieAnimation(
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .aspectRatio(1f)
-                                .background(White, CircleShape),
-                            composition = composition,
-                            iterations = LottieConstants.IterateForever,
-                            contentScale = ContentScale.Fit
-                        )
-                    }
-                    Spacer(modifier = Modifier.weight(0.3f))
+                    LottieAnimation(
+                        modifier = Modifier
+                            .weight(0.4f)
+                            .aspectRatio(1f)
+                            .background(White, CircleShape),
+                        composition = composition,
+                        iterations = LottieConstants.IterateForever,
+                        contentScale = ContentScale.Fit
+                    )
                 }
-                Spacer(Modifier.height(16.dp))
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = userData.username,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = userData.email,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    textAlign = TextAlign.Center
-                )
+                Spacer(modifier = Modifier.weight(0.3f))
             }
+            Spacer(Modifier.height(16.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = userData.username,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = userData.email,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
+            )
         }
     }
+}
 
+@Composable
+fun ListFavorite(
+    listData: List<Anime>,
+    onCardClick: (Anime) -> Unit
+) {
+    ListTrendingAnime(listData = listData) {
+        onCardClick(it)
+    }
 }
