@@ -3,15 +3,13 @@ package com.example.animecollection.module
 import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
 import com.example.animecollection.domain.repository.ILocaleRepository
 import com.example.animecollection.domain.repository.IUserRepository
-import com.example.animecollection.domain.usecase.GetAllAnimeUseCase
-import com.example.animecollection.domain.usecase.GetGenreUseCase
-import com.example.animecollection.domain.usecase.GetSearchedAnimeUseCase
+import com.example.animecollection.domain.usecase.*
 import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
 import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
-import com.example.animecollection.domain.usecase.user.GetUidUseCase
-import com.example.animecollection.domain.usecase.user.LoginUseCase
-import com.example.animecollection.domain.usecase.user.LogoutUseCase
-import com.example.animecollection.domain.usecase.user.RegisterUseCase
+import com.example.animecollection.domain.usecase.auth.GetUidUseCase
+import com.example.animecollection.domain.usecase.auth.LoginUseCase
+import com.example.animecollection.domain.usecase.auth.LogoutUseCase
+import com.example.animecollection.domain.usecase.auth.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,4 +63,20 @@ object UseCaseModule {
     @Singleton
     fun providesLogoutUseCase(repository: IUserRepository) =
         LogoutUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesAddFavoriteUseCase(repository: IUserRepository) =
+        AddFavoriteUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesCheckIsFavoriteUseCase(repository: IUserRepository) =
+        CheckIsFavoriteUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesGetAllFavoriteUseCase(repository: IUserRepository) =
+        GetAllFavoriteUseCase(repository)
+
 }

@@ -1,10 +1,9 @@
 package com.example.animecollection.ui.settings
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
 import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
-import com.example.animecollection.domain.usecase.user.LogoutUseCase
+import com.example.animecollection.domain.usecase.auth.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

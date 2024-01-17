@@ -1,7 +1,5 @@
 package com.example.animecollection.ui.detail
 
-import android.graphics.Rect
-import android.view.View
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -11,17 +9,15 @@ import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,10 +52,10 @@ fun DetailScreen(
             DetailContent(
                 anime = anime,
                 character = characterState,
-                genre = genre
-            ) {
-                navigator.popBackStack()
-            }
+                genre = genre,
+                onBackClick = { navigator.popBackStack() },
+                onFavoriteClicked = { viewModel.addFavorite(it) }
+            )
         }
     }
 }
@@ -69,7 +65,8 @@ fun DetailContent(
     anime: Anime,
     character: AnimeCharacterState,
     genre: GenreState,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onFavoriteClicked: (Anime) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val scrolledAppBar = remember {
@@ -109,7 +106,8 @@ fun DetailContent(
             CompDetailTopBar(
                 onBackClick = { onBackClick() },
                 title = anime.titleEn,
-                scrolled = scrolledAppBar.value
+                scrolled = scrolledAppBar.value,
+                onFavoriteClicked = { onFavoriteClicked(anime) },
             )
         }
 
@@ -120,7 +118,8 @@ fun DetailContent(
 fun CompDetailTopBar(
     onBackClick: () -> Unit,
     title: String,
-    scrolled: Boolean
+    scrolled: Boolean,
+    onFavoriteClicked: () -> Unit
 ) {
     AnimatedContent(
         targetState = scrolled,
@@ -137,32 +136,45 @@ fun CompDetailTopBar(
                     ))
         },
     ) { scrolled1 ->
-        Row(
-            modifier = Modifier
-                .background(if (scrolled1) Color.Transparent else MaterialTheme.colorScheme.primary)
-                .fillMaxWidth()
-                .padding(8.dp)
-                .aspectRatio(8f),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { onBackClick() }) {
-                Icon(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background, CircleShape),
-                    imageVector = Icons.Default.ChevronLeft,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
+        CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = if (scrolled1)
+                    Color.Transparent
+                else
+                    MaterialTheme.colorScheme.primary
+            ),
+            navigationIcon = {
+                IconButton(onClick = { onBackClick() }) {
+                    Icon(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primary, CircleShape)
+                            .padding(2.dp),
+                        imageVector = Icons.Default.ChevronLeft,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
+            },
+            title = {
+                if (!scrolled1) {
+                    Text(
+                        text = title,
+                    )
+                }
+            },
+            actions = {
+                IconButton(onClick = { onFavoriteClicked() }) {
+                    Icon(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primary, CircleShape)
+                            .padding(2.dp),
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
             }
-            if (!scrolled1) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        }
+        )
     }
 }
 
@@ -284,23 +296,4 @@ fun AnimeCharacter(
             }
         }
     }
-}
-
-fun Modifier.visibilityPercentage(callback: (Float) -> Unit): Modifier {
-    return composed {
-        val view = LocalView.current.parent as View
-        onGloballyPositioned {
-            callback(visibilityPercentage(view))
-        }
-    }
-}
-
-fun visibilityPercentage(view: View): Float {
-    if (!view.isAttachedToWindow) return 0f
-    val rect = Rect()
-    if (!view.getLocalVisibleRect(rect)) return 0f
-    val totalArea = (view.height * view.width).toFloat()
-    if (totalArea == 0f) return 0f
-    val visibleArea = (rect.bottom - rect.top) * (rect.right - rect.left)
-    return visibleArea / totalArea
 }

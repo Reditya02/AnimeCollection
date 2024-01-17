@@ -3,8 +3,7 @@ package com.example.animecollection.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animecollection.core.UIState
-import com.example.animecollection.domain.model.User
-import com.example.animecollection.domain.usecase.user.GetUserDataUseCase
+import com.example.animecollection.domain.usecase.auth.GetUserDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

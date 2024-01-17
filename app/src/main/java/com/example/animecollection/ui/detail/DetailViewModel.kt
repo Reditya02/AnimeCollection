@@ -3,6 +3,8 @@ package com.example.animecollection.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animecollection.core.UIState
+import com.example.animecollection.domain.model.Anime
+import com.example.animecollection.domain.usecase.AddFavoriteUseCase
 import com.example.animecollection.domain.usecase.GetAnimeCharacterUseCase
 import com.example.animecollection.domain.usecase.GetGenreUseCase
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getAnimeCharacterUseCase: GetAnimeCharacterUseCase,
-    private val getGenreUseCase: GetGenreUseCase
+    private val getGenreUseCase: GetGenreUseCase,
+    private val addFavoriteUseCase: AddFavoriteUseCase
 ) : ViewModel() {
     private val _characterState = MutableStateFlow(AnimeCharacterState())
     val characterState: StateFlow<AnimeCharacterState> = _characterState
@@ -75,4 +78,6 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun addFavorite(anime: Anime) = addFavoriteUseCase(anime)
 }

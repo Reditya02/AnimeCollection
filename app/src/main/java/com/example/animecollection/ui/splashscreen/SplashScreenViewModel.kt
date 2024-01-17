@@ -1,7 +1,7 @@
 package com.example.animecollection.ui.splashscreen
 
 import androidx.lifecycle.ViewModel
-import com.example.animecollection.domain.usecase.user.GetUidUseCase
+import com.example.animecollection.domain.usecase.auth.GetUidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.example.animecollection.domain.usecase.user
+package com.example.animecollection.domain.usecase.auth
 
 import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.repository.IUserRepository

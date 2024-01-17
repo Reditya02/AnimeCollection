@@ -1,7 +1,5 @@
 package com.example.animecollection.utils
 
-import com.example.animecollection.data.remote.api.response.AnimeDetailResponse
-import com.example.animecollection.data.remote.api.response.AnimeGenreResponse
 import com.example.animecollection.data.remote.api.response.AnimeResponse
 import com.example.animecollection.data.remote.api.response.SearchedAnimeResponse
 import com.example.animecollection.domain.model.Anime
@@ -17,8 +15,7 @@ object DataMapper {
                 titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
                 titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
                 rating = anime.averageRating ?: "-",
-                synopsis = anime.synopsis,
-                genre = listOf()
+                synopsis = anime.synopsis
             )
         }
 
@@ -32,30 +29,7 @@ object DataMapper {
                 titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
                 titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
                 rating = anime.averageRating ?: "-",
-                synopsis = anime.synopsis,
-                genre = listOf()
+                synopsis = anime.synopsis
             )
-        }
-
-    fun mapAnimeDetailResponseToAnimeDetailLocal(
-        response: AnimeDetailResponse,
-        genre: AnimeGenreResponse
-    ): Anime =
-        response.data.attributes.run {
-            Anime(
-                id = response.data.id,
-                posterImage = posterImage.tiny ?: "",
-                coverImage = coverImage?.tiny ?: "",
-                titleEn = titles.en ?: titles.enJp ?: "",
-                titleJp = titles.enJp ?: "",
-                rating = averageRating ?: "",
-                synopsis = synopsis,
-                genre = mapGenreResponse(genre)
-            )
-        }
-
-    fun mapGenreResponse(response: AnimeGenreResponse): List<String> =
-        response.data.map { result ->
-            result.attributes.name
         }
 }

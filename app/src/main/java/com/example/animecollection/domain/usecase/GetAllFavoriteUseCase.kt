@@ -1,11 +1,11 @@
-package com.example.animecollection.domain.usecase.user
+package com.example.animecollection.domain.usecase
 
 import com.example.animecollection.domain.repository.IUserRepository
 import javax.inject.Inject
 
-class GetUserDataUseCase @Inject constructor(
+class GetAllFavoriteUseCase @Inject constructor(
     private val repository: IUserRepository
 ) {
     operator fun invoke() =
-        repository.getUserData()
+        repository.getAllFavorite()
 }
