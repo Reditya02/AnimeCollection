@@ -7,11 +7,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.bottombar.BottomNavGraph
 import com.example.animecollection.ui.component.bottombar.RootNavigator
+import com.example.animecollection.ui.destinations.LoginScreenDestination
+import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.launch
+import okhttp3.internal.notifyAll
 
 @BottomNavGraph
 @Destination
@@ -20,6 +25,10 @@ fun SettingsScreen(
     navigator: RootNavigator,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    var isOpenDialog by remember {
+        mutableStateOf(false)
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -31,8 +40,23 @@ fun SettingsScreen(
                 isDarkTheme = state.value,
                 switchChecked = {
                     viewModel.changeTheme()
-                }
+                },
+                onLogoutClicked = { isOpenDialog = true },
+
             )
+            if (isOpenDialog) {
+                LogoutAlertDialog(
+                    onDismissClicked = { isOpenDialog = false },
+                    onConfirmClicked = {
+                        viewModel.logout()
+                        navigator.value.navigate(LoginScreenDestination) {
+                            popUpTo(LoginScreenDestination) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }
@@ -40,7 +64,8 @@ fun SettingsScreen(
 @Composable
 fun SettingsContent(
     isDarkTheme: Boolean,
-    switchChecked: () -> Unit
+    switchChecked: () -> Unit,
+    onLogoutClicked: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -69,6 +94,8 @@ fun SettingsContent(
                     }
                 })
             }
+            Spacer(modifier = Modifier.weight(1f))
+            CompButton(modifier = Modifier.fillMaxWidth(), onClick = onLogoutClicked, text = "Keluar")
         }
     }
 }

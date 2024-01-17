@@ -22,7 +22,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun getUid(): String =
         datasource.getUid()
 
-    override fun logout() {
-        TODO("Not yet implemented")
-    }
+    override fun logout() =
+        datasource.logout()
 }

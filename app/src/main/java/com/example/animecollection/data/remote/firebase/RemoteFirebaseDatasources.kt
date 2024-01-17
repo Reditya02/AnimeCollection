@@ -11,8 +11,9 @@ import kotlinx.coroutines.tasks.await
 
 class RemoteFirebaseDatasources {
     fun user() = Firebase.auth.currentUser
-
     fun getUid(): String = Firebase.auth.currentUser?.uid ?: ""
+    fun logout() = Firebase.auth.signOut()
+
 
     fun login(email: String, password: String) = flow {
         emit(UIState.Loading())
@@ -29,4 +30,5 @@ class RemoteFirebaseDatasources {
     }.catch {
         emit(UIState.Error(it.message))
     }.flowOn(Dispatchers.IO)
+
 }
