@@ -8,15 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.ui.component.CompButton
-import com.example.animecollection.ui.component.bottombar.BottomNavGraph
-import com.example.animecollection.ui.component.bottombar.RootNavigator
+import com.example.animecollection.core.navigation.BottomNavGraph
+import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.LoginScreenDestination
-import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
 
 @BottomNavGraph
 @Destination

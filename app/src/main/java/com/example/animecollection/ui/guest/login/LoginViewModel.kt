@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.login
+package com.example.animecollection.ui.guest.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

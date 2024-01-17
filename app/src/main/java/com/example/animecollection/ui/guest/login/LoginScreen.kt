@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.login
+package com.example.animecollection.ui.guest.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

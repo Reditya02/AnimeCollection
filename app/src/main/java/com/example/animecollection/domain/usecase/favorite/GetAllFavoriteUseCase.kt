@@ -1,4 +1,4 @@
-package com.example.animecollection.domain.usecase
+package com.example.animecollection.domain.usecase.favorite
 
 import com.example.animecollection.domain.repository.IUserRepository
 import javax.inject.Inject

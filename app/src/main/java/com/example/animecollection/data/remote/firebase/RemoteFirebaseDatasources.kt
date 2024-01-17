@@ -16,11 +16,11 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 
 class RemoteFirebaseDatasources {
-    fun user() = Firebase.auth.currentUser
+    private fun user() = Firebase.auth.currentUser
     fun getUid(): String = Firebase.auth.currentUser?.uid ?: ""
     fun logout() = Firebase.auth.signOut()
 
-    fun getUserDataInstance() =
+    private fun getUserDataInstance() =
         FirebaseFirestore
             .getInstance()
             .collection("user_data")

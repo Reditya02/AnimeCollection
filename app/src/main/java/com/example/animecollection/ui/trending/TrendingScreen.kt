@@ -11,11 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.domain.model.Anime
-import com.example.animecollection.ui.component.AErrorMessage
-import com.example.animecollection.ui.component.AListAnime
-import com.example.animecollection.ui.component.ALoadingAnimation
-import com.example.animecollection.ui.component.bottombar.BottomNavGraph
-import com.example.animecollection.ui.component.bottombar.RootNavigator
+import com.example.animecollection.ui.component.CompErrorMessage
+import com.example.animecollection.ui.component.CompListAnime
+import com.example.animecollection.ui.component.CompLoadingAnimation
+import com.example.animecollection.core.navigation.BottomNavGraph
+import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 
@@ -65,13 +65,13 @@ fun TrendingContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (isLoading)
-                ALoadingAnimation()
+                CompLoadingAnimation()
             else if (listData.isNotEmpty())
                 ListTrendingAnime(listData = listData) {
                     onCardClick(it)
                 }
             else
-                AErrorMessage(message = message)
+                CompErrorMessage(message = message)
         }
     }
 }
@@ -84,7 +84,7 @@ fun ListTrendingAnime(
     LazyColumn(
         content = {
             items(listData) {
-                AListAnime(
+                CompListAnime(
                     modifier = Modifier.clickable { onCardClick(it) },
                     anime = it
                 )

@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.register
+package com.example.animecollection.ui.guest.register
 
 data class RegisterState(
     val isRegister: Boolean = false,

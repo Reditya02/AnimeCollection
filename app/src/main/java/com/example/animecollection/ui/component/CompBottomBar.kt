@@ -1,16 +1,15 @@
-package com.example.animecollection.ui.component.bottombar
+package com.example.animecollection.ui.component
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.animecollection.core.navigation.BottomBarDestination
 import com.example.animecollection.ui.NavGraphs
 import com.example.animecollection.ui.appCurrentDestinationAsState
 import com.example.animecollection.ui.destinations.Destination
 import com.example.animecollection.ui.startAppDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.navigate
-import com.ramcosta.composedestinations.navigation.navigateTo
 import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Composable

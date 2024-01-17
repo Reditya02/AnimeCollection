@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.login
+package com.example.animecollection.ui.guest.login
 
 data class LoginState(
     val isLogin: Boolean = false,

@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.register
+package com.example.animecollection.ui.guest.register
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

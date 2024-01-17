@@ -10,6 +10,9 @@ import com.example.animecollection.domain.usecase.auth.GetUidUseCase
 import com.example.animecollection.domain.usecase.auth.LoginUseCase
 import com.example.animecollection.domain.usecase.auth.LogoutUseCase
 import com.example.animecollection.domain.usecase.auth.RegisterUseCase
+import com.example.animecollection.domain.usecase.favorite.AddFavoriteUseCase
+import com.example.animecollection.domain.usecase.favorite.CheckIsFavoriteUseCase
+import com.example.animecollection.domain.usecase.favorite.GetAllFavoriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

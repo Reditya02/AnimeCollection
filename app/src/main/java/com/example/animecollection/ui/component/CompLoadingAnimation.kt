@@ -15,7 +15,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.R
 
 @Composable
-fun ALoadingAnimation(
+fun CompLoadingAnimation(
     modifier: Modifier = Modifier
 ) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_loading))

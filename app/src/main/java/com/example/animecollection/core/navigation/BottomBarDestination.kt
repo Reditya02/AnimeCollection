@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.component.bottombar
+package com.example.animecollection.core.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalFireDepartment

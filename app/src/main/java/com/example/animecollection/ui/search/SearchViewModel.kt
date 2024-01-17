@@ -1,6 +1,5 @@
 package com.example.animecollection.ui.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animecollection.core.UIState

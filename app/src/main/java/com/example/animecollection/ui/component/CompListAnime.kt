@@ -17,7 +17,7 @@ import com.example.animecollection.domain.model.Anime
 
 
 @Composable
-fun AListAnime(
+fun CompListAnime(
     modifier: Modifier = Modifier,
     anime: Anime
 ) {

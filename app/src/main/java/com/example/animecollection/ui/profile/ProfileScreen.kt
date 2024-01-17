@@ -26,8 +26,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.domain.model.User
-import com.example.animecollection.ui.component.bottombar.BottomNavGraph
-import com.example.animecollection.ui.component.bottombar.RootNavigator
+import com.example.animecollection.core.navigation.BottomNavGraph
+import com.example.animecollection.core.navigation.RootNavigator
 import com.google.firebase.storage.FirebaseStorage
 import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.tasks.await

@@ -1,4 +1,4 @@
-package com.example.animecollection.ui.splashscreen
+package com.example.animecollection.ui.guest.splashscreen
 
 import androidx.lifecycle.ViewModel
 import com.example.animecollection.domain.usecase.auth.GetUidUseCase
