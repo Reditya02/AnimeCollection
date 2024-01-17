@@ -109,7 +109,7 @@ class RemoteFirebaseDatasources {
 
         val listener = EventListener<QuerySnapshot> { value, error ->
             if (value != null) {
-                trySend(UIState.Success(true))
+                trySend(UIState.Success(!value.isEmpty))
             } else {
                 trySend(UIState.Success(false))
             }

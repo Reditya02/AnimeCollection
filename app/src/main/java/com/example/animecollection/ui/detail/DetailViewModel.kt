@@ -91,7 +91,7 @@ class DetailViewModel @Inject constructor(
             when(uiState) {
                 is UIState.Error -> _isFavorite.update { false }
                 is UIState.Loading -> _isFavorite.update { false }
-                is UIState.Success -> _isFavorite.update { true }
+                is UIState.Success -> _isFavorite.update { uiState.data ?: false }
             }
         }
     }
