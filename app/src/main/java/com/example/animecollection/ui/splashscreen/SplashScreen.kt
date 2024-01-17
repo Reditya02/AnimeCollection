@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -27,11 +28,15 @@ import kotlinx.coroutines.delay
 @Destination
 @Composable
 fun SplashScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: SplashScreenViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         delay(1000)
-        navigator.navigate(LoginScreenDestination)
+        if (viewModel.getUid().isNotEmpty())
+            navigator.navigate(MainScreenDestination)
+        else
+            navigator.navigate(LoginScreenDestination)
     }
 
     Row(

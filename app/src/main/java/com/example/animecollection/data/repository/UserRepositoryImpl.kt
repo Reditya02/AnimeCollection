@@ -19,6 +19,9 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<UIState<Boolean>> =
         datasource.register(username, email, password)
 
+    override fun getUid(): String =
+        datasource.getUid()
+
     override fun logout() {
         TODO("Not yet implemented")
     }

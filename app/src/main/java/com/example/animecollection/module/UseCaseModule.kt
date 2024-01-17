@@ -8,6 +8,7 @@ import com.example.animecollection.domain.usecase.GetGenreUseCase
 import com.example.animecollection.domain.usecase.GetSearchedAnimeUseCase
 import com.example.animecollection.domain.usecase.theme.ChangeThemeUseCase
 import com.example.animecollection.domain.usecase.theme.GetIsDarkThemeUseCase
+import com.example.animecollection.domain.usecase.user.GetUidUseCase
 import com.example.animecollection.domain.usecase.user.LoginUseCase
 import com.example.animecollection.domain.usecase.user.RegisterUseCase
 import dagger.Module
@@ -53,4 +54,9 @@ object UseCaseModule {
     @Singleton
     fun providesRegisterUseCase(repository: IUserRepository) =
         RegisterUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesGetUidUseCase(repository: IUserRepository) =
+        GetUidUseCase(repository)
 }
