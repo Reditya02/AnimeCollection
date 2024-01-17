@@ -1,20 +1,28 @@
 package com.example.animecollection.data.remote.firebase
 
 import com.example.animecollection.core.UIState
+import com.example.animecollection.domain.model.User
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 
 class RemoteFirebaseDatasources {
     fun user() = Firebase.auth.currentUser
     fun getUid(): String = Firebase.auth.currentUser?.uid ?: ""
     fun logout() = Firebase.auth.signOut()
+
+    fun getUserDataInstance() =
+        FirebaseFirestore
+            .getInstance()
+            .collection("user_data")
 
     fun login(email: String, password: String) = flow {
         emit(UIState.Loading())
@@ -35,7 +43,28 @@ class RemoteFirebaseDatasources {
         emit(UIState.Error(it.message))
     }.flowOn(Dispatchers.IO)
 
-    fun setUserData(username: String, email: String, id: String) {
+    fun getUserData() = callbackFlow {
+        trySend(UIState.Loading())
+
+        val listener =
+            EventListener<DocumentSnapshot> { value, error ->
+                if (value != null && value.exists()) {
+                    val result = value.toObject(User::class.java)
+                    trySend(UIState.Success(result))
+                } else {
+                    trySend(UIState.Error(error?.message ?: "error"))
+                }
+
+            }
+
+        val firebase = getUserDataInstance()
+            .document(getUid())
+            .addSnapshotListener(listener)
+
+        awaitClose { firebase.remove() }
+    }
+
+    private fun setUserData(username: String, email: String, id: String) {
         FirebaseFirestore
             .getInstance()
             .collection("user_data")
@@ -43,7 +72,8 @@ class RemoteFirebaseDatasources {
             .apply {
                 set(hashMapOf(
                     "username" to username,
-                    "email" to email
+                    "email" to email,
+                    "photo" to "profile_image/profile_image_placeholder.jpg"
                 ))
             }
     }

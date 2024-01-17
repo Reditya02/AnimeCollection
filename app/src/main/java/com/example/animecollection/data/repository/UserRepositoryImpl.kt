@@ -2,6 +2,7 @@ package com.example.animecollection.data.repository
 
 import com.example.animecollection.core.UIState
 import com.example.animecollection.data.remote.firebase.RemoteFirebaseDatasources
+import com.example.animecollection.domain.model.User
 import com.example.animecollection.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,4 +25,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun logout() =
         datasource.logout()
+
+    override fun getUserData() =
+        datasource.getUserData()
 }
