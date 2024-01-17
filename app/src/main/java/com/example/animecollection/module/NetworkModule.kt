@@ -1,7 +1,7 @@
 package com.example.animecollection.module
 
 import com.example.animecollection.BuildConfig
-import com.example.animecollection.data.remote.ApiService
+import com.example.animecollection.data.remote.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,8 +1,8 @@
 package com.example.animecollection.data.repository
 
 import com.example.animecollection.core.UIState
-import com.example.animecollection.data.remote.RemoteDatasources
-import com.example.animecollection.data.remote.response.ApiResponse
+import com.example.animecollection.data.remote.api.RemoteApiDatasources
+import com.example.animecollection.data.remote.api.response.ApiResponse
 import com.example.animecollection.domain.model.AnimeCharacter
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.repository.IAnimeDatabaseRepository
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AnimeDatabaseRepositoryImpl @Inject constructor(
-    private val datasources: RemoteDatasources
+    private val datasources: RemoteApiDatasources
 ) : IAnimeDatabaseRepository {
     override fun getAllAnime(): Flow<UIState<List<Anime>>> = flow {
         emit(UIState.Loading())

@@ -1,7 +1,6 @@
-package com.example.animecollection.data.remote
+package com.example.animecollection.data.remote.api
 
-import android.util.Log
-import com.example.animecollection.data.remote.response.*
+import com.example.animecollection.data.remote.api.response.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -9,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class RemoteDatasources @Inject constructor(
+class RemoteApiDatasources @Inject constructor(
     private val apiService: ApiService
 ) {
     fun getListTrendingAnime(): Flow<ApiResponse<AnimeResponse>> {

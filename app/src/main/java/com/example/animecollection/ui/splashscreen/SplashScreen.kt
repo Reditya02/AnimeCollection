@@ -15,6 +15,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.R
+import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.MainScreenDestination
 import com.example.animecollection.ui.destinations.TrendingScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -30,7 +31,7 @@ fun SplashScreen(
 ) {
     LaunchedEffect(Unit) {
         delay(1000)
-        navigator.navigate(MainScreenDestination)
+        navigator.navigate(LoginScreenDestination)
     }
 
     Row(

@@ -1,4 +1,4 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -37,70 +37,70 @@ data class Productions(
 
 data class DataItem(
 
-	@field:SerializedName("relationships")
+    @field:SerializedName("relationships")
 	val relationships: Relationships,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: Links,
 
-	@field:SerializedName("attributes")
+    @field:SerializedName("attributes")
 	val attributes: Attributes,
 
-	@field:SerializedName("id")
+    @field:SerializedName("id")
 	val id: String,
 
-	@field:SerializedName("type")
+    @field:SerializedName("type")
 	val type: String
 )
 
 data class Relationships(
 
-	@field:SerializedName("animeCharacters")
+    @field:SerializedName("animeCharacters")
 	val animeCharacters: AnimeCharacters,
 
-	@field:SerializedName("animeProductions")
+    @field:SerializedName("animeProductions")
 	val animeProductions: AnimeProductions,
 
-	@field:SerializedName("staff")
+    @field:SerializedName("staff")
 	val staff: Staff,
 
-	@field:SerializedName("streamingLinks")
+    @field:SerializedName("streamingLinks")
 	val streamingLinks: StreamingLinks,
 
-	@field:SerializedName("quotes")
+    @field:SerializedName("quotes")
 	val quotes: Quotes,
 
-	@field:SerializedName("characters")
+    @field:SerializedName("characters")
 	val characters: Characters,
 
-	@field:SerializedName("castings")
+    @field:SerializedName("castings")
 	val castings: Castings,
 
-	@field:SerializedName("mappings")
+    @field:SerializedName("mappings")
 	val mappings: Mappings,
 
-	@field:SerializedName("animeStaff")
+    @field:SerializedName("animeStaff")
 	val animeStaff: AnimeStaff,
 
-	@field:SerializedName("reviews")
+    @field:SerializedName("reviews")
 	val reviews: Reviews,
 
-	@field:SerializedName("installments")
+    @field:SerializedName("installments")
 	val installments: Installments,
 
-	@field:SerializedName("genres")
+    @field:SerializedName("genres")
 	val genres: Genres,
 
-	@field:SerializedName("mediaRelationships")
+    @field:SerializedName("mediaRelationships")
 	val mediaRelationships: MediaRelationships,
 
-	@field:SerializedName("categories")
+    @field:SerializedName("categories")
 	val categories: Categories,
 
-	@field:SerializedName("productions")
+    @field:SerializedName("productions")
 	val productions: Productions,
 
-	@field:SerializedName("episodes")
+    @field:SerializedName("episodes")
 	val episodes: Episodes
 )
 
@@ -199,22 +199,22 @@ data class Genres(
 
 data class PosterImage(
 
-	@field:SerializedName("small")
+    @field:SerializedName("small")
 	val small: String? = null,
 
-	@field:SerializedName("original")
+    @field:SerializedName("original")
 	val original: String? = null,
 
-	@field:SerializedName("large")
+    @field:SerializedName("large")
 	val large: String? = null,
 
-	@field:SerializedName("tiny")
+    @field:SerializedName("tiny")
 	val tiny: String? = null,
 
-	@field:SerializedName("meta")
+    @field:SerializedName("meta")
 	val meta: Meta? = null,
 
-	@field:SerializedName("medium")
+    @field:SerializedName("medium")
 	val medium: String? = null
 )
 
@@ -226,97 +226,97 @@ data class Meta(
 
 data class Attributes(
 
-	@field:SerializedName("nextRelease")
+    @field:SerializedName("nextRelease")
 	val nextRelease: Any,
 
-	@field:SerializedName("endDate")
+    @field:SerializedName("endDate")
 	val endDate: String,
 
-	@field:SerializedName("episodeCount")
+    @field:SerializedName("episodeCount")
 	val episodeCount: Int,
 
-	@field:SerializedName("description")
+    @field:SerializedName("description")
 	val description: String,
 
-	@field:SerializedName("ratingRank")
+    @field:SerializedName("ratingRank")
 	val ratingRank: Int,
 
-	@field:SerializedName("posterImage")
+    @field:SerializedName("posterImage")
 	val posterImage: PosterImage,
 
-	@field:SerializedName("createdAt")
+    @field:SerializedName("createdAt")
 	val createdAt: String,
 
-	@field:SerializedName("subtype")
+    @field:SerializedName("subtype")
 	val subtype: String,
 
-	@field:SerializedName("youtubeVideoId")
+    @field:SerializedName("youtubeVideoId")
 	val youtubeVideoId: String,
 
-	@field:SerializedName("averageRating")
+    @field:SerializedName("averageRating")
 	val averageRating: String? = null,
 
-	@field:SerializedName("coverImage")
+    @field:SerializedName("coverImage")
 	val coverImage: CoverImage? = null,
 
-	@field:SerializedName("ratingFrequencies")
+    @field:SerializedName("ratingFrequencies")
 	val ratingFrequencies: RatingFrequencies,
 
-	@field:SerializedName("showType")
+    @field:SerializedName("showType")
 	val showType: String,
 
-	@field:SerializedName("abbreviatedTitles")
+    @field:SerializedName("abbreviatedTitles")
 	val abbreviatedTitles: List<String>,
 
-	@field:SerializedName("slug")
+    @field:SerializedName("slug")
 	val slug: String,
 
-	@field:SerializedName("episodeLength")
+    @field:SerializedName("episodeLength")
 	val episodeLength: Int,
 
-	@field:SerializedName("updatedAt")
+    @field:SerializedName("updatedAt")
 	val updatedAt: String,
 
-	@field:SerializedName("nsfw")
+    @field:SerializedName("nsfw")
 	val nsfw: Boolean,
 
-	@field:SerializedName("synopsis")
+    @field:SerializedName("synopsis")
 	val synopsis: String,
 
-	@field:SerializedName("titles")
+    @field:SerializedName("titles")
 	val titles: Titles,
 
-	@field:SerializedName("ageRating")
+    @field:SerializedName("ageRating")
 	val ageRating: String,
 
-	@field:SerializedName("totalLength")
+    @field:SerializedName("totalLength")
 	val totalLength: Int,
 
-	@field:SerializedName("favoritesCount")
+    @field:SerializedName("favoritesCount")
 	val favoritesCount: Int,
 
-	@field:SerializedName("coverImageTopOffset")
+    @field:SerializedName("coverImageTopOffset")
 	val coverImageTopOffset: Int,
 
-	@field:SerializedName("canonicalTitle")
+    @field:SerializedName("canonicalTitle")
 	val canonicalTitle: String,
 
-	@field:SerializedName("tba")
+    @field:SerializedName("tba")
 	val tba: Any,
 
-	@field:SerializedName("userCount")
+    @field:SerializedName("userCount")
 	val userCount: Int,
 
-	@field:SerializedName("popularityRank")
+    @field:SerializedName("popularityRank")
 	val popularityRank: Int,
 
-	@field:SerializedName("ageRatingGuide")
+    @field:SerializedName("ageRatingGuide")
 	val ageRatingGuide: String,
 
-	@field:SerializedName("startDate")
+    @field:SerializedName("startDate")
 	val startDate: String,
 
-	@field:SerializedName("status")
+    @field:SerializedName("status")
 	val status: String
 )
 
@@ -385,16 +385,16 @@ data class Reviews(
 
 data class Dimensions(
 
-	@field:SerializedName("small")
+    @field:SerializedName("small")
 	val small: Small,
 
-	@field:SerializedName("large")
+    @field:SerializedName("large")
 	val large: Large,
 
-	@field:SerializedName("tiny")
+    @field:SerializedName("tiny")
 	val tiny: Tiny,
 
-	@field:SerializedName("medium")
+    @field:SerializedName("medium")
 	val medium: Medium
 )
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1024829362959",
+    "project_id": "anime-collection-1107e",
+    "storage_bucket": "anime-collection-1107e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024829362959:android:9b9dc70d6513e326e5247a",
+        "android_client_info": {
+          "package_name": "com.example.animecollection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHv-bRl3_Mk5_g5DXH6GcY4fhOdZlF43o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

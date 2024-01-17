@@ -1,4 +1,4 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -22,52 +22,52 @@ data class MediaCharacters(
 
 data class CharacterAttributes(
 
-	@field:SerializedName("createdAt")
+    @field:SerializedName("createdAt")
 	val createdAt: String,
 
-	@field:SerializedName("image")
+    @field:SerializedName("image")
 	val image: Image,
 
-	@field:SerializedName("names")
+    @field:SerializedName("names")
 	val names: Names,
 
-	@field:SerializedName("otherNames")
+    @field:SerializedName("otherNames")
 	val otherNames: List<Any>,
 
-	@field:SerializedName("name")
+    @field:SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("description")
+    @field:SerializedName("description")
 	val description: String,
 
-	@field:SerializedName("slug")
+    @field:SerializedName("slug")
 	val slug: String,
 
-	@field:SerializedName("malId")
+    @field:SerializedName("malId")
 	val malId: Any,
 
-	@field:SerializedName("updatedAt")
+    @field:SerializedName("updatedAt")
 	val updatedAt: String,
 
-	@field:SerializedName("canonicalName")
+    @field:SerializedName("canonicalName")
 	val canonicalName: String
 )
 
 data class CharacterData(
 
-	@field:SerializedName("relationships")
+    @field:SerializedName("relationships")
 	val relationships: CharacterRelationships,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: Links,
 
-	@field:SerializedName("attributes")
+    @field:SerializedName("attributes")
 	val attributes: CharacterAttributes,
 
-	@field:SerializedName("id")
+    @field:SerializedName("id")
 	val id: String,
 
-	@field:SerializedName("type")
+    @field:SerializedName("type")
 	val type: String
 )
 
@@ -79,36 +79,36 @@ data class Names(
 
 data class CharacterRelationships(
 
-	@field:SerializedName("castings")
+    @field:SerializedName("castings")
 	val castings: Castings,
 
-	@field:SerializedName("primaryMedia")
+    @field:SerializedName("primaryMedia")
 	val primaryMedia: PrimaryMedia,
 
-	@field:SerializedName("mediaCharacters")
+    @field:SerializedName("mediaCharacters")
 	val mediaCharacters: MediaCharacters,
 
-	@field:SerializedName("quotes")
+    @field:SerializedName("quotes")
 	val quotes: Quotes
 )
 
 data class Image(
 
-	@field:SerializedName("small")
+    @field:SerializedName("small")
 	val small: String,
 
-	@field:SerializedName("original")
+    @field:SerializedName("original")
 	val original: String,
 
-	@field:SerializedName("large")
+    @field:SerializedName("large")
 	val large: String,
 
-	@field:SerializedName("tiny")
+    @field:SerializedName("tiny")
 	val tiny: String,
 
-	@field:SerializedName("meta")
+    @field:SerializedName("meta")
 	val meta: Meta,
 
-	@field:SerializedName("medium")
+    @field:SerializedName("medium")
 	val medium: String
 )

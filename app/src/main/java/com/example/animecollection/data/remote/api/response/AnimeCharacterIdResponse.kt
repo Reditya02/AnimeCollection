@@ -1,13 +1,13 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
 data class AnimeCharacterIdResponse(
 
-	@field:SerializedName("data")
+    @field:SerializedName("data")
 	val data: List<CharacterIdDataItem>,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: Links
 )
 

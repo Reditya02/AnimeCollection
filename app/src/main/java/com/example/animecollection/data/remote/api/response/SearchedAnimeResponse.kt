@@ -1,16 +1,16 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
 data class SearchedAnimeResponse(
 
-	@field:SerializedName("data")
+    @field:SerializedName("data")
 	val data: List<DataItem>,
 
-	@field:SerializedName("meta")
+    @field:SerializedName("meta")
 	val meta: SearchedMeta,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: SearchedLinks
 )
 

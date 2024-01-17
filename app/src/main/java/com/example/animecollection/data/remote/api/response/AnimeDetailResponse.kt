@@ -1,4 +1,4 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,18 +10,18 @@ data class AnimeDetailResponse(
 
 data class Data(
 
-	@field:SerializedName("relationships")
+    @field:SerializedName("relationships")
 	val relationships: Relationships,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: Links,
 
-	@field:SerializedName("attributes")
+    @field:SerializedName("attributes")
 	val attributes: Attributes,
 
-	@field:SerializedName("id")
+    @field:SerializedName("id")
 	val id: String,
 
-	@field:SerializedName("type")
+    @field:SerializedName("type")
 	val type: String
 )

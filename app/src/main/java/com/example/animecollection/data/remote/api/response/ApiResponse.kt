@@ -1,4 +1,4 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 sealed class ApiResponse<out T> {
     data class Success<out T>(val data: T) : ApiResponse<T>()

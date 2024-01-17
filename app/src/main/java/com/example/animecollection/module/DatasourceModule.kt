@@ -2,8 +2,9 @@ package com.example.animecollection.module
 
 import com.example.animecollection.data.locale.LocaleDatasources
 import com.example.animecollection.data.locale.SharedPref
-import com.example.animecollection.data.remote.ApiService
-import com.example.animecollection.data.remote.RemoteDatasources
+import com.example.animecollection.data.remote.api.ApiService
+import com.example.animecollection.data.remote.api.RemoteApiDatasources
+import com.example.animecollection.data.remote.firebase.RemoteFirebaseDatasources
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,9 +16,13 @@ import javax.inject.Singleton
 object DatasourceModule {
     @Provides
     @Singleton
-    fun providesRemoteDatasources(apiService: ApiService) = RemoteDatasources(apiService)
+    fun providesRemoteApiDatasources(apiService: ApiService) = RemoteApiDatasources(apiService)
 
     @Provides
     @Singleton
     fun providesLocalseDatasources(pref: SharedPref) = LocaleDatasources(pref)
+
+    @Provides
+    @Singleton
+    fun providesRemoteFirebaseDatasources() = RemoteFirebaseDatasources()
 }

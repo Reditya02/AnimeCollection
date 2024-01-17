@@ -1,16 +1,16 @@
-package com.example.animecollection.data.remote.response
+package com.example.animecollection.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 
 data class AnimeGenreResponse(
 
-	@field:SerializedName("data")
+    @field:SerializedName("data")
 	val data: List<GenreDataItem>,
 
-	@field:SerializedName("meta")
+    @field:SerializedName("meta")
 	val meta: GenreMeta,
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: GenreLinks
 )
 
@@ -34,16 +34,16 @@ data class GenreAttributes(
 
 data class GenreDataItem(
 
-	@field:SerializedName("links")
+    @field:SerializedName("links")
 	val links: Links,
 
-	@field:SerializedName("attributes")
+    @field:SerializedName("attributes")
 	val attributes: GenreAttributes,
 
-	@field:SerializedName("id")
+    @field:SerializedName("id")
 	val id: String,
 
-	@field:SerializedName("type")
+    @field:SerializedName("type")
 	val type: String
 )
 

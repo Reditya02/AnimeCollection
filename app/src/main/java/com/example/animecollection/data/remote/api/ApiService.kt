@@ -1,6 +1,6 @@
-package com.example.animecollection.data.remote
+package com.example.animecollection.data.remote.api
 
-import com.example.animecollection.data.remote.response.*
+import com.example.animecollection.data.remote.api.response.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

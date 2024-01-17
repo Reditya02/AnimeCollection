@@ -1,9 +1,9 @@
 package com.example.animecollection.utils
 
-import com.example.animecollection.data.remote.response.AnimeDetailResponse
-import com.example.animecollection.data.remote.response.AnimeGenreResponse
-import com.example.animecollection.data.remote.response.AnimeResponse
-import com.example.animecollection.data.remote.response.SearchedAnimeResponse
+import com.example.animecollection.data.remote.api.response.AnimeDetailResponse
+import com.example.animecollection.data.remote.api.response.AnimeGenreResponse
+import com.example.animecollection.data.remote.api.response.AnimeResponse
+import com.example.animecollection.data.remote.api.response.SearchedAnimeResponse
 import com.example.animecollection.domain.model.Anime
 
 object DataMapper {
