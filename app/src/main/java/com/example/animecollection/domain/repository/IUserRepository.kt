@@ -12,8 +12,10 @@ interface IUserRepository {
     fun getUid(): String
     fun logout()
 
-    fun getAllFavorite(): Flow<UIState<MutableList<Anime>>>
+    fun getAllFavorite(id: String?): Flow<UIState<MutableList<Anime>>>
     fun checkIsFavorite(id: String): Flow<UIState<Boolean>>
     fun addFavorite(anime: Anime)
     fun removeFavorite(id: String)
+
+    fun searchUser(query: String): Flow<UIState<List<User?>>>
 }

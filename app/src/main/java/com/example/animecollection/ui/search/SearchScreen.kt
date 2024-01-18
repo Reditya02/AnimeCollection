@@ -43,7 +43,7 @@ fun SearchScreen(
                 isLoading = state.isLoading,
                 query = state.query,
                 onSearch = { viewModel.search(it) },
-                onSearchTextFieldChanged = { viewModel.onSearchtextFieldvalueChanged(it) },
+                onSearchTextFieldChanged = { viewModel.onSearchTextFieldValueChanged(it) },
                 onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
             )
         }

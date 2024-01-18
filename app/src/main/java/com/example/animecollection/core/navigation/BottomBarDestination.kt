@@ -1,15 +1,9 @@
 package com.example.animecollection.core.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.animecollection.ui.destinations.ProfileScreenDestination
-import com.example.animecollection.ui.destinations.SearchScreenDestination
-import com.example.animecollection.ui.destinations.SettingsScreenDestination
-import com.example.animecollection.ui.destinations.TrendingScreenDestination
+import com.example.animecollection.ui.destinations.*
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
 enum class BottomBarDestination(
@@ -19,6 +13,7 @@ enum class BottomBarDestination(
 ) {
     Trending(TrendingScreenDestination, Icons.Default.LocalFireDepartment, "Trending"),
     Search(SearchScreenDestination, Icons.Default.Search, "Search"),
+    SearchUser(SearchUserScreenDestination, Icons.Default.SearchOff, "Search User"),
     Settings(SettingsScreenDestination, Icons.Default.Settings, "Settings"),
     Profile(ProfileScreenDestination, Icons.Default.Person, "Profile")
 }

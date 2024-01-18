@@ -6,6 +6,6 @@ import javax.inject.Inject
 class GetAllFavoriteUseCase @Inject constructor(
     private val repository: IUserRepository
 ) {
-    operator fun invoke() =
-        repository.getAllFavorite()
+    operator fun invoke(id: String?) =
+        repository.getAllFavorite(id)
 }

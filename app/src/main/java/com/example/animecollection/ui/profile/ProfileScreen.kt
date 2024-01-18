@@ -1,7 +1,6 @@
 package com.example.animecollection.ui.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,6 +32,7 @@ import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.example.animecollection.ui.trending.ListTrendingAnime
 import com.google.firebase.storage.FirebaseStorage
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.tasks.await
 
 @BottomNavGraph
@@ -40,7 +40,7 @@ import kotlinx.coroutines.tasks.await
 @Composable
 fun ProfileScreen(
     navigator: RootNavigator,
-    viewModel: ProfileViewModel = hiltViewModel(),
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -53,17 +53,15 @@ fun ProfileScreen(
                 )
             }
         ) {
-            Column(Modifier.padding(it)) {
-                val state = viewModel.state.collectAsState().value
-                ProfileContent(
-                    isLoading = state.isLoading,
-                    userData = state.data
-                )
-                ListFavorite(
-                    listData = state.listFavorite,
-                    onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
-                )
-            }
+            val state = viewModel.state.collectAsState().value
+
+            ProfileContent(
+                modifier = Modifier.padding(it),
+                isLoading = state.isLoading,
+                userData = state.data,
+                lisData = state.listFavorite,
+                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) },
+            )
         }
 
     }
@@ -71,6 +69,26 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileContent(
+    modifier: Modifier = Modifier,
+    isLoading: Boolean,
+    userData: User,
+    lisData: List<Anime>,
+    onCardClick: (Anime) -> Unit
+) {
+    Column(modifier) {
+        UserProfileContent(
+            isLoading = isLoading,
+            userData = userData
+        )
+        ListFavorite(
+            listData = lisData,
+            onCardClick = { onCardClick(it) }
+        )
+    }
+}
+
+@Composable
+fun UserProfileContent(
     isLoading: Boolean,
     userData: User,
 ) {

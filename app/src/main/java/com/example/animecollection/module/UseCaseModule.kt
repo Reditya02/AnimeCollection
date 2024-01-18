@@ -88,4 +88,9 @@ object UseCaseModule {
     fun providesRemoveFavorite(repository: IUserRepository) =
         RemoveFavoriteUseCase(repository)
 
+    @Provides
+    @Singleton
+    fun providesSearhUserUseCase(repository: IUserRepository) =
+        SearchUserUseCase(repository)
+
 }

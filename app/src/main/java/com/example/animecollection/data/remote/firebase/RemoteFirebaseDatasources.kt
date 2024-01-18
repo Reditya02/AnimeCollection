@@ -5,10 +5,7 @@ import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.model.User
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -84,7 +81,7 @@ class RemoteFirebaseDatasources {
             }
     }
 
-    fun getALlFavorite() = callbackFlow {
+    fun getALlFavorite(id: String?) = callbackFlow {
         trySend(UIState.Loading())
 
         val listener = EventListener<QuerySnapshot> { value, error ->
@@ -97,7 +94,7 @@ class RemoteFirebaseDatasources {
         }
 
         val firebase = getUserDataInstance()
-            .document(getUid())
+            .document(id ?: getUid())
             .collection("favorite")
             .addSnapshotListener(listener)
 
@@ -140,4 +137,26 @@ class RemoteFirebaseDatasources {
             .delete()
     }
 
+    fun searchUser(query: String) = callbackFlow {
+        trySend(UIState.Loading())
+        val listener = EventListener<QuerySnapshot> {value, error ->
+            if (value != null) {
+                val result = value.documents.map {
+                    it.toObject(User::class.java)
+                }
+                trySend(UIState.Success(result))
+            } else {
+                trySend(UIState.Error(error?.message ?: "Error"))
+            }
+        }
+
+        val firebase = getUserDataInstance()
+            .where(Filter.or(
+                Filter.greaterThanOrEqualTo("username", query),
+                Filter.lessThanOrEqualTo("username", query)
+            ))
+            .addSnapshotListener(listener)
+
+        awaitClose { firebase.remove() }
+    }
 }

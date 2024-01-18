@@ -27,7 +27,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getListFavorite() = viewModelScope.launch {
-        getAllFavoriteUseCase().collectLatest { uiState ->
+        getAllFavoriteUseCase(null).collectLatest { uiState ->
             when(uiState) {
                 is UIState.Error -> {}
                 is UIState.Loading -> {}
