@@ -73,7 +73,8 @@ class RemoteFirebaseDatasources {
                 set(hashMapOf(
                     "username" to username,
                     "email" to email,
-                    "photo" to "profile_image/profile_image_placeholder.jpg"
+                    "photo" to "profile_image/profile_image_placeholder.jpg",
+                    "id" to id
                 ))
                     .addOnSuccessListener {
                         Log.d("Firestore", "User data successfully set for ID: $id")

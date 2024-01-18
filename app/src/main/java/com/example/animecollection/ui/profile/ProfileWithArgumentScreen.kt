@@ -21,6 +21,7 @@ fun ProfileWithArgumentScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     user: User
 ) {
+    viewModel.getListFavorite(user.id)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
