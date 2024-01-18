@@ -31,6 +31,7 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
     }
 
     override fun getAnimeCharacter(id: String): Flow<UIState<List<AnimeCharacter>>> = flow {
+        emit(UIState.Loading())
         val result: MutableList<AnimeCharacter> = mutableListOf()
         var isResponsevalid = false
         val characterId = datasources.getCharacterId(id).first()
@@ -53,6 +54,9 @@ class AnimeDatabaseRepositoryImpl @Inject constructor(
             }
             if (isResponsevalid)
                 emit(UIState.Success(result))
+        }
+        else {
+            emit(UIState.Error("No Data Available"))
         }
     }
 

@@ -42,10 +42,11 @@ class RemoteApiDatasources @Inject constructor(
     fun getCharacterId(id: String): Flow<ApiResponse<AnimeCharacterIdResponse>> = flow {
         val response = apiService.getCharacterId(id)
         val body = response.body()
-        if (response.isSuccessful && body != null)
+        if (response.isSuccessful && body != null && body.data.isNotEmpty()) {
             emit(ApiResponse.Success(body))
-        else
+        } else {
             emit(ApiResponse.Error(response.message()))
+        }
     }.catch {
         emit(ApiResponse.Error("Cannot connect to server"))
     }.flowOn(Dispatchers.IO)
