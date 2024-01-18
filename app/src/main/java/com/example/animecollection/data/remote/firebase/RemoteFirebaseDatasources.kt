@@ -1,6 +1,7 @@
 package com.example.animecollection.data.remote.firebase
 
 import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.model.User
@@ -143,6 +144,8 @@ class RemoteFirebaseDatasources {
             if (value != null) {
                 val result = value.documents.map {
                     it.toObject(User::class.java)
+                }.filter {
+                    it!!.username.lowercase().contains(query.lowercase())
                 }
                 trySend(UIState.Success(result))
             } else {
@@ -151,10 +154,6 @@ class RemoteFirebaseDatasources {
         }
 
         val firebase = getUserDataInstance()
-            .where(Filter.or(
-                Filter.greaterThanOrEqualTo("username", query),
-                Filter.lessThanOrEqualTo("username", query)
-            ))
             .addSnapshotListener(listener)
 
         awaitClose { firebase.remove() }
