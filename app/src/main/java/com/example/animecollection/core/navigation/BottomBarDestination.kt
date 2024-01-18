@@ -12,8 +12,7 @@ enum class BottomBarDestination(
     val text: String
 ) {
     Trending(TrendingScreenDestination, Icons.Default.LocalFireDepartment, "Trending"),
-    Search(SearchScreenDestination, Icons.Default.Search, "Search"),
-    SearchUser(SearchUserScreenDestination, Icons.Default.SearchOff, "Search User"),
+    Search(SearchUserScreenDestination, Icons.Default.Search, "Search"),
     Settings(SettingsScreenDestination, Icons.Default.Settings, "Settings"),
     Profile(ProfileScreenDestination, Icons.Default.Person, "Profile")
 }

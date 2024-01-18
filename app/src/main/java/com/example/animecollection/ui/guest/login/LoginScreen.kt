@@ -24,8 +24,10 @@ import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.CompEditText
 import com.example.animecollection.ui.destinations.MainScreenDestination
 import com.example.animecollection.ui.destinations.RegisterScreenDestination
+import com.example.animecollection.ui.destinations.SplashScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Destination
 @Composable
@@ -42,8 +44,13 @@ fun LoginScreen(
         Column {
             val state = viewModel.state.collectAsState().value
 
-            if (state.isLogin)
-                navigator.navigate(MainScreenDestination)
+            if (state.isLogin) {
+                navigator.navigate(MainScreenDestination) {
+                    popUpTo(SplashScreenDestination) {
+                        inclusive = true
+                    }
+                }
+            }
 
             LoginContent(
                 emailValue = state.email,

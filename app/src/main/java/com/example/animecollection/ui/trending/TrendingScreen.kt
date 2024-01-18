@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,6 +19,7 @@ import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.DetailScreenDestination
+import com.example.animecollection.ui.destinations.SearchScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 
 @BottomNavGraph(start = true)
@@ -37,8 +40,8 @@ fun TrendingScreen(
                 listData = state.listAnime,
                 message = state.message,
                 isLoading = state.isLoading,
-                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
-
+                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) },
+                onSearchClick = { navigator.value.navigate(SearchScreenDestination) }
             )
         }
     }
@@ -49,12 +52,16 @@ fun TrendingContent(
     listData: List<Anime>,
     message: String,
     isLoading: Boolean,
-    onCardClick: (Anime) -> Unit
+    onCardClick: (Anime) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(text = "Trending Anime") },
+                actions = { IconButton(onClick = onSearchClick) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "")
+                } }
             )
         }
     ) {

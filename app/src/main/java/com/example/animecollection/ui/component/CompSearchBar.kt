@@ -23,7 +23,8 @@ fun CompSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String
 ) {
     TextField(
         modifier = modifier
@@ -42,7 +43,7 @@ fun CompSearchBar(
             }
         },
         placeholder = {
-            Text("Cari Anime")
+            Text(text)
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions{ onSearch(query) }

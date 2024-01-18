@@ -22,12 +22,12 @@ import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@BottomNavGraph
 @Destination
 @Composable
 fun SearchScreen(
-    navigator: RootNavigator,
+    navigator: DestinationsNavigator,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     Surface(
@@ -44,7 +44,7 @@ fun SearchScreen(
                 query = state.query,
                 onSearch = { viewModel.search(it) },
                 onSearchTextFieldChanged = { viewModel.onSearchTextFieldValueChanged(it) },
-                onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) }
+                onCardClick = { navigator.navigate(DetailScreenDestination(it)) }
             )
         }
     }
@@ -67,7 +67,8 @@ fun SearchContent(
             CompSearchBar(
                 query = query,
                 onQueryChange = onSearchTextFieldChanged,
-                onSearch = onSearch
+                onSearch = onSearch,
+                text = "Cari Anime"
             )
             if (isLoading) CompLoadingAnimation()
             if (errorMessage.isNotEmpty()) CompErrorMessage(message = errorMessage)

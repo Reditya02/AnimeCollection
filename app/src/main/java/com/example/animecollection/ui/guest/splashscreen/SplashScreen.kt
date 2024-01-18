@@ -17,9 +17,11 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.animecollection.R
 import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.MainScreenDestination
+import com.example.animecollection.ui.destinations.SplashScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.delay
 
 @RootNavGraph(start = true)
@@ -31,10 +33,19 @@ fun SplashScreen(
 ) {
     LaunchedEffect(Unit) {
         delay(1000)
-        if (viewModel.getUid().isNotEmpty())
-            navigator.navigate(MainScreenDestination)
-        else
-            navigator.navigate(LoginScreenDestination)
+        if (viewModel.getUid().isNotEmpty()) {
+            navigator.navigate(MainScreenDestination) {
+                popUpTo(SplashScreenDestination) {
+                    inclusive = true
+                }
+            }
+        } else {
+            navigator.navigate(LoginScreenDestination) {
+                popUpTo(SplashScreenDestination) {
+                    inclusive = true
+                }
+            }
+        }
     }
 
     Row(

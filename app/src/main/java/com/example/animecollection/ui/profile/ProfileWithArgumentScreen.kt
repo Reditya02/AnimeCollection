@@ -2,6 +2,8 @@ package com.example.animecollection.ui.profile
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +28,10 @@ fun ProfileWithArgumentScreen(
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = "Profile") }
+                    title = { Text(text = "Profile") },
+                    navigationIcon = { IconButton(onClick = { navigator.popBackStack() }) {
+                        Icon(imageVector = Icons.Default.ChevronLeft, contentDescription = "")
+                    }}
                 )
             }
         ) {

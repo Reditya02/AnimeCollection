@@ -11,6 +11,7 @@ import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.LoginScreenDestination
+import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ fun SettingsScreen(
                     onConfirmClicked = {
                         viewModel.logout()
                         navigator.value.navigate(LoginScreenDestination) {
-                            popUpTo(LoginScreenDestination) {
+                            popUpTo(SettingsScreenDestination) {
                                 inclusive = true
                             }
                         }

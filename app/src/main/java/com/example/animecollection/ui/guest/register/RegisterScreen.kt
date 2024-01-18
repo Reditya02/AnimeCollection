@@ -21,8 +21,10 @@ import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.CompEditText
 import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.MainScreenDestination
+import com.example.animecollection.ui.destinations.SplashScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Destination
 @Composable
@@ -38,8 +40,13 @@ fun RegisterScreen(
     ) {
         val state = viewModel.state.collectAsState().value
 
-        if (state.isRegister)
-            navigator.navigate(MainScreenDestination)
+        if (state.isRegister) {
+            navigator.navigate(MainScreenDestination) {
+                popUpTo(SplashScreenDestination) {
+                    inclusive = true
+                }
+            }
+        }
 
         RegisterContent(
             nameValue = state.name,

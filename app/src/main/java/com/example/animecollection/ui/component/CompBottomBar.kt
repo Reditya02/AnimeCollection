@@ -37,6 +37,7 @@ fun CompBottomBar(
                 },
                 icon = { Icon(destination.icon, contentDescription = "")},
                 label = { Text(text = destination.text) },
+                alwaysShowLabel = false
             )
         }
     }

@@ -73,7 +73,8 @@ fun SearchUserContent(
             CompSearchBar(
                 query = query,
                 onQueryChange = onSearchTextFieldChanged,
-                onSearch = onSearch
+                onSearch = onSearch,
+                text = "Cari Pengguna Lain"
             )
             if (isLoading) CompLoadingAnimation()
             if (errorMessage.isNotEmpty()) CompErrorMessage(message = errorMessage)
