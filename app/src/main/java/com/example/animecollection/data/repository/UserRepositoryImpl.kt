@@ -1,5 +1,6 @@
 package com.example.animecollection.data.repository
 
+import android.net.Uri
 import com.example.animecollection.core.UIState
 import com.example.animecollection.data.remote.firebase.RemoteFirebaseDatasources
 import com.example.animecollection.domain.model.Anime
@@ -47,4 +48,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun changeName(name: String) =
         datasource.changeName(name)
+
+    override suspend fun uploadImage(uri: Uri) =
+        datasource.uploadImage(uri)
 }

@@ -1,5 +1,6 @@
 package com.example.animecollection.data.remote.firebase
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.text.toLowerCase
 import com.example.animecollection.core.UIState
@@ -8,6 +9,7 @@ import com.example.animecollection.domain.model.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
@@ -163,5 +165,18 @@ class RemoteFirebaseDatasources {
         getUserDataInstance()
             .document(getUid())
             .update("username", name)
+    }
+
+    suspend fun uploadImage(uri: Uri) {
+        val uid = getUid()
+        Firebase.storage.reference
+            .child("profile_image")
+            .child(uid)
+            .putFile(uri).await()
+            .storage.downloadUrl.await()
+
+        getUserDataInstance()
+            .document(uid)
+            .update("photo", "profile_image/$uid")
     }
 }

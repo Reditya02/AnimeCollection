@@ -1,5 +1,6 @@
 package com.example.animecollection.domain.repository
 
+import android.net.Uri
 import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.domain.model.User
@@ -13,6 +14,7 @@ interface IUserRepository {
     fun logout()
 
     fun changeName(name: String)
+    suspend fun uploadImage(uri: Uri)
 
     fun getAllFavorite(id: String?): Flow<UIState<MutableList<Anime>>>
     fun checkIsFavorite(id: String): Flow<UIState<Boolean>>

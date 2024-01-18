@@ -1,5 +1,7 @@
 package com.example.animecollection.ui.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -31,6 +33,12 @@ fun SettingsScreen(
         mutableStateOf(false)
     }
 
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            viewModel.uploadImage(uri)
+        }
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -45,7 +53,7 @@ fun SettingsScreen(
                 },
                 onLogoutClicked = { isOpenDialog = true },
                 onChangeNameClicked = { navigator.value.navigate(ChangeNameScreenDestination) },
-                onChangePhotoClicked = {  }
+                onChangePhotoClicked = { galleryLauncher.launch("image/*") }
             )
             if (isOpenDialog) {
                 LogoutAlertDialog(
