@@ -8,6 +8,7 @@ import com.example.animecollection.domain.usecase.favorite.AddFavoriteUseCase
 import com.example.animecollection.domain.usecase.favorite.CheckIsFavoriteUseCase
 import com.example.animecollection.domain.usecase.GetAnimeCharacterUseCase
 import com.example.animecollection.domain.usecase.GetGenreUseCase
+import com.example.animecollection.domain.usecase.favorite.RemoveFavoriteUseCase
 import com.example.animecollection.ui.detail.model.AnimeCharacterState
 import com.example.animecollection.ui.detail.model.GenreState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,8 @@ class DetailViewModel @Inject constructor(
     private val getAnimeCharacterUseCase: GetAnimeCharacterUseCase,
     private val getGenreUseCase: GetGenreUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
-    private val checkIsFavoriteUseCase: CheckIsFavoriteUseCase
+    private val checkIsFavoriteUseCase: CheckIsFavoriteUseCase,
+    private val removeFavoriteUseCase: RemoveFavoriteUseCase
 ) : ViewModel() {
     private val _characterState = MutableStateFlow(AnimeCharacterState())
     val characterState: StateFlow<AnimeCharacterState> = _characterState
@@ -84,7 +86,15 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun addFavorite(anime: Anime) = addFavoriteUseCase(anime)
+    fun addFavorite(anime: Anime) = viewModelScope.launch {
+        addFavoriteUseCase(anime)
+        checkIsFavorite(anime.id)
+    }
+
+    fun removeFavorite(id: String) = viewModelScope.launch {
+        removeFavoriteUseCase(id)
+        checkIsFavorite(id)
+    }
 
     fun checkIsFavorite(id: String) = viewModelScope.launch {
         checkIsFavoriteUseCase(id).collectLatest { uiState ->

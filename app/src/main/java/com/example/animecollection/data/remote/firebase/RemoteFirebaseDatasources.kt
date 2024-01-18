@@ -132,16 +132,12 @@ class RemoteFirebaseDatasources {
             .set(anime)
     }
 
-}
+    fun removeFavorite(id: String) {
+        getUserDataInstance()
+            .document(getUid())
+            .collection("favorite")
+            .document(id)
+            .delete()
+    }
 
-/*
-hashMapOf(
-                "id" to anime.id,
-                "posterImage" to anime.posterImage,
-                "coverImage" to anime.coverImage,
-                "titleEn" to anime.titleEn,
-                "titleJp" to anime.titleJp,
-                "rating" to anime.rating,
-                "synopsis" to anime.synopsis,
-            )
- */
+}

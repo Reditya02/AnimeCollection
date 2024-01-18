@@ -37,4 +37,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun addFavorite(anime: Anime) =
         datasource.addFavorite(anime)
+
+    override fun removeFavorite(id: String) =
+        datasource.removeFavorite(id)
 }

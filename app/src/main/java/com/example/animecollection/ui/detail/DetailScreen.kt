@@ -56,7 +56,12 @@ fun DetailScreen(
                 character = characterState,
                 genre = genre,
                 onBackClick = { navigator.popBackStack() },
-                onFavoriteClicked = { viewModel.addFavorite(it) },
+                onFavoriteClicked = {
+                    if (isFavorite)
+                        viewModel.removeFavorite(it.id)
+                    else
+                        viewModel.addFavorite(it)
+                },
                 isFavorite = isFavorite
             )
         }

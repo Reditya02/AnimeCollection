@@ -13,6 +13,7 @@ import com.example.animecollection.domain.usecase.auth.RegisterUseCase
 import com.example.animecollection.domain.usecase.favorite.AddFavoriteUseCase
 import com.example.animecollection.domain.usecase.favorite.CheckIsFavoriteUseCase
 import com.example.animecollection.domain.usecase.favorite.GetAllFavoriteUseCase
+import com.example.animecollection.domain.usecase.favorite.RemoveFavoriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -81,5 +82,10 @@ object UseCaseModule {
     @Singleton
     fun providesGetAllFavoriteUseCase(repository: IUserRepository) =
         GetAllFavoriteUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun providesRemoveFavorite(repository: IUserRepository) =
+        RemoveFavoriteUseCase(repository)
 
 }

@@ -15,4 +15,5 @@ interface IUserRepository {
     fun getAllFavorite(): Flow<UIState<MutableList<Anime>>>
     fun checkIsFavorite(id: String): Flow<UIState<Boolean>>
     fun addFavorite(anime: Anime)
+    fun removeFavorite(id: String)
 }
