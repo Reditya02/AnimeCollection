@@ -239,6 +239,7 @@ fun DetailAnime(
             Column(
                 modifier = Modifier.weight(7f)
             ) {
+                Text(text = "Rating: ${anime.rating}")
                 FlowRow {
                     genre.genre.forEach {
                         Card(

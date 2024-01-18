@@ -10,8 +10,8 @@ object DataMapper {
             val anime = result.attributes
             Anime(
                 id = result.id,
-                posterImage = anime.posterImage.run { small ?: original ?: tiny ?: large ?: ""},
-                coverImage = anime.coverImage?.run { small ?: original ?: tiny ?: large ?: ""} ?: "",
+                posterImage = anime.posterImage.run { original ?: small ?: tiny ?: large ?: ""},
+                coverImage = anime.coverImage?.run { original ?: small ?: tiny ?: large ?: ""} ?: "",
                 titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
                 titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
                 rating = anime.averageRating ?: "-",
@@ -24,8 +24,8 @@ object DataMapper {
             val anime = result.attributes
             Anime(
                 id = result.id,
-                posterImage = anime.posterImage.run { small ?: original ?: tiny ?: large ?: ""},
-                coverImage = anime.coverImage?.run { small ?: original ?: tiny ?: large ?: ""} ?: "",
+                posterImage = anime.posterImage.run { original ?: small ?: tiny ?: large ?: ""},
+                coverImage = anime.coverImage?.run { original ?: small ?: tiny ?: large ?: ""} ?: "",
                 titleEn = anime.titles.run { en ?: enJp ?: jaJp ?: "" },
                 titleJp = anime.titles.run { jaJp ?: enJp ?: "" },
                 rating = anime.averageRating ?: "-",

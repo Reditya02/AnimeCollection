@@ -35,9 +35,10 @@ class RemoteFirebaseDatasources {
 
     fun register(username: String, email: String, password: String) = flow {
         emit(UIState.Loading())
-        Firebase.auth.createUserWithEmailAndPassword(email, password).await()
-        user()?.apply {
-            setUserData(username, email, uid)
+        Firebase.auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+            user()?.apply {
+                setUserData(username, email, uid)
+            }
         }
         emit(UIState.Success(true))
     }.catch {
