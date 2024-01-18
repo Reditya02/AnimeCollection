@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.CompEditText
+import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.MainScreenDestination
 import com.example.animecollection.ui.destinations.SplashScreenDestination
@@ -174,11 +175,14 @@ fun RegisterContent(
             )
 
             CompButton(
-                modifier = Modifier.padding(horizontal = 6.dp),
+                modifier = Modifier.padding(horizontal = 6.dp).fillMaxWidth(),
                 onClick = onCreateAccountClicked,
                 text = "Buat Akun",
                 enabled = isNotEmpty
             )
+
+            if (isLoading)
+                CompLoadingAnimation()
 
             Row(
                 modifier = Modifier

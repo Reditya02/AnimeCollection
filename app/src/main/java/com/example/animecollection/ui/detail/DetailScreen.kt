@@ -255,7 +255,7 @@ fun DetailAnime(
                 }
             }
         }
-        Spacer(modifier = Modifier.padding(top = 12.dp))
+        Spacer(modifier = Modifier.padding(top = 16.dp))
         Text(
             modifier = Modifier
                 .padding(start = 8.dp, bottom = 2.dp),
@@ -264,6 +264,13 @@ fun DetailAnime(
             style = MaterialTheme.typography.bodyLarge
         )
         Text(text = anime.synopsis, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 2.dp, top = 16.dp),
+            text = "Character",
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.bodyLarge
+        )
         AnimeCharacter(characterData = character)
     }
 }
@@ -273,39 +280,36 @@ fun AnimeCharacter(
     characterData: AnimeCharacterState
 ) {
     characterData.apply {
-        Column {
-            Text(text = "Character")
-            if (isLoading)
-                CompLoadingAnimation(Modifier.padding(120.dp, 40.dp))
-            else if (message.isNotEmpty())
-                CompErrorMessage(message = message)
-            else {
-                LazyRow(
-                    content = {
-                        items(character) {
-                            Card(
+        if (isLoading)
+            CompLoadingAnimation(Modifier.padding(120.dp, 40.dp))
+        else if (message.isNotEmpty())
+            CompErrorMessage(message = message)
+        else {
+            LazyRow(
+                content = {
+                    items(character) {
+                        Card(
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(210.dp)
+                                .padding(4.dp)
+                        ) {
+                            AsyncImage(
+                                modifier = Modifier.weight(8f),
+                                model = it.image,
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop
+                            )
+                            Text(
                                 modifier = Modifier
-                                    .width(120.dp)
-                                    .height(210.dp)
-                                    .padding(4.dp)
-                            ) {
-                                AsyncImage(
-                                    modifier = Modifier.weight(8f),
-                                    model = it.image,
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Crop
-                                )
-                                Text(
-                                    modifier = Modifier
-                                        .weight(2f)
-                                        .padding(4.dp, 6.dp),
-                                    text = it.name
-                                )
-                            }
+                                    .weight(2f)
+                                    .padding(4.dp, 6.dp),
+                                text = it.name
+                            )
                         }
                     }
-                )
-            }
+                }
+            )
         }
     }
 }

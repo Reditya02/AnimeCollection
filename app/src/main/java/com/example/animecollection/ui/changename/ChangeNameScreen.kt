@@ -46,6 +46,7 @@ fun ChangeNameContent(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         CompEditText(
+            modifier = Modifier.fillMaxWidth(),
             value = name,
             label = "name",
             onValueChange = onTextFieldValueChanged,

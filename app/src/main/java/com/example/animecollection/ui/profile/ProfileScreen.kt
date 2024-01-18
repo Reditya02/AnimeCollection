@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,6 +31,8 @@ import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.example.animecollection.ui.trending.ListTrendingAnime
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -42,6 +45,7 @@ fun ProfileScreen(
     navigator: RootNavigator,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
+    viewModel.getListFavorite(null)
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -79,6 +83,15 @@ fun ProfileContent(
         UserProfileContent(
             isLoading = isLoading,
             userData = userData
+        )
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 2.dp, top = 16.dp)
+                .fillMaxWidth(),
+            text = "Favorite",
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium
         )
         ListFavorite(
             listData = lisData,

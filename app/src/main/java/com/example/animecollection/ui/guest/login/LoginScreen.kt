@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.CompEditText
+import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.ui.destinations.MainScreenDestination
 import com.example.animecollection.ui.destinations.RegisterScreenDestination
 import com.example.animecollection.ui.destinations.SplashScreenDestination
@@ -139,6 +140,9 @@ fun LoginContent(
                 text = "Masuk",
                 enabled = isNotEmpty
             )
+
+            if (isLoading)
+                CompLoadingAnimation()
 
             Row(
                 modifier = Modifier
