@@ -1,5 +1,6 @@
 package com.example.animecollection.ui.guest.splashscreen
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -31,8 +33,10 @@ fun SplashScreen(
     navigator: DestinationsNavigator,
     viewModel: SplashScreenViewModel = hiltViewModel(),
 ) {
+    val mp = MediaPlayer.create(LocalContext.current, R.raw.audio_welcome)
     LaunchedEffect(Unit) {
         delay(1000)
+        mp.start()
         if (viewModel.getUid().isNotEmpty()) {
             navigator.navigate(MainScreenDestination) {
                 popUpTo(SplashScreenDestination) {
