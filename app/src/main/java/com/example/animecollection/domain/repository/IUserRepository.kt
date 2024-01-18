@@ -12,6 +12,8 @@ interface IUserRepository {
     fun getUid(): String
     fun logout()
 
+    fun changeName(name: String)
+
     fun getAllFavorite(id: String?): Flow<UIState<MutableList<Anime>>>
     fun checkIsFavorite(id: String): Flow<UIState<Boolean>>
     fun addFavorite(anime: Anime)

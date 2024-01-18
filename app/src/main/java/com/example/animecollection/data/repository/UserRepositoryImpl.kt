@@ -44,4 +44,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun searchUser(query: String) =
         datasource.searchUser(query)
+
+    override fun changeName(name: String) =
+        datasource.changeName(name)
 }

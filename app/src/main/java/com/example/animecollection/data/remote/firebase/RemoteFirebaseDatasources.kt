@@ -158,4 +158,10 @@ class RemoteFirebaseDatasources {
 
         awaitClose { firebase.remove() }
     }
+
+    fun changeName(name: String) {
+        getUserDataInstance()
+            .document(getUid())
+            .update("username", name)
+    }
 }

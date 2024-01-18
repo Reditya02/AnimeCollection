@@ -1,6 +1,9 @@
 package com.example.animecollection.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
+import com.example.animecollection.ui.destinations.ChangeNameScreenDestination
 import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -40,7 +44,8 @@ fun SettingsScreen(
                     viewModel.changeTheme()
                 },
                 onLogoutClicked = { isOpenDialog = true },
-
+                onChangeNameClicked = { navigator.value.navigate(ChangeNameScreenDestination) },
+                onChangePhotoClicked = {  }
             )
             if (isOpenDialog) {
                 LogoutAlertDialog(
@@ -63,7 +68,9 @@ fun SettingsScreen(
 fun SettingsContent(
     isDarkTheme: Boolean,
     switchChecked: () -> Unit,
-    onLogoutClicked: () -> Unit
+    onLogoutClicked: () -> Unit,
+    onChangeNameClicked: () -> Unit,
+    onChangePhotoClicked: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -92,8 +99,28 @@ fun SettingsContent(
                     }
                 })
             }
+            Row(
+                Modifier
+                    .padding(12.dp)
+                    .clickable { onChangeNameClicked() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Change username")
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ChevronRight, contentDescription = "")
+            }
+            Row(
+                Modifier
+                    .padding(12.dp)
+                    .clickable { onChangePhotoClicked() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Change user photo")
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.ChevronRight, contentDescription = "")
+            }
             Spacer(modifier = Modifier.weight(1f))
-            CompButton(modifier = Modifier.fillMaxWidth(), onClick = onLogoutClicked, text = "Keluar")
+            CompButton(modifier = Modifier.fillMaxWidth(), onClick = onLogoutClicked, text = "Logout")
         }
     }
 }
