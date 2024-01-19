@@ -6,8 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -26,6 +25,7 @@ import com.example.animecollection.ui.destinations.SplashScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
+import kotlinx.coroutines.launch
 
 @Destination
 @Composable
@@ -94,10 +94,21 @@ fun RegisterContent(
     isLoading: Boolean,
     errorMessage: String
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = errorMessage) {
+        if (errorMessage.isNotEmpty())
+            scope.launch {
+                snackbarHostState.showSnackbar(errorMessage)
+            }
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text(text = "Anime Collection", style = MaterialTheme.typography.headlineMedium) })
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
         Column(
             Modifier
@@ -175,7 +186,9 @@ fun RegisterContent(
             )
 
             CompButton(
-                modifier = Modifier.padding(horizontal = 6.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(horizontal = 6.dp)
+                    .fillMaxWidth(),
                 onClick = onCreateAccountClicked,
                 text = "Buat Akun",
                 enabled = isNotEmpty

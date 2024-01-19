@@ -1,11 +1,11 @@
 package com.example.animecollection.ui.guest.register
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.usecase.auth.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -61,15 +61,19 @@ class RegisterViewModel @Inject constructor(
     fun register() = viewModelScope.launch {
         state.value.apply {
             registerUseCase(name, email, password).collectLatest { uiState ->
-                Log.d("Reditya", "Register uiState $uiState")
                 when(uiState) {
-                    is UIState.Error -> _state.update { it.copy(errorMessage = uiState.message ?: "Error") }
+                    is UIState.Error -> _state.update { it.copy(
+                        errorMessage = uiState.message ?: "Error",
+                        isLoading = false
+                    ) }
                     is UIState.Loading -> _state.update { it.copy(isLoading = true) }
                     is UIState.Success -> _state.update { it.copy(
                         isLoading = false,
                         isRegister = true
                     ) }
                 }
+                delay(100)
+                _state.update { it.copy(errorMessage = "") }
             }
         }
     }
