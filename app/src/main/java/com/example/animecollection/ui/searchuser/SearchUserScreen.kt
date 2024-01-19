@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -36,6 +37,8 @@ fun SearchUserScreen(
     navigator: RootNavigator,
     viewModel: SearchUserViewModel = hiltViewModel(),
 ) {
+    val focusManager = LocalFocusManager.current
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -48,7 +51,10 @@ fun SearchUserScreen(
                 errorMessage = state.errorMessage,
                 isLoading = state.isLoading,
                 query = state.query,
-                onSearch = { viewModel.search(it) },
+                onSearch = {
+                    focusManager.clearFocus()
+                    viewModel.search(it)
+                },
                 onSearchTextFieldChanged = { viewModel.onSearchTextFieldValueChanged(it) },
                 onCardClick = { navigator.value.navigate(ProfileWithArgumentScreenDestination(it)) }
             )

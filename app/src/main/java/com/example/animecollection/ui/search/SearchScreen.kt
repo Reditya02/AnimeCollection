@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.CompErrorMessage
@@ -30,6 +31,8 @@ fun SearchScreen(
     navigator: DestinationsNavigator,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
+    val focusManager = LocalFocusManager.current
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -42,7 +45,10 @@ fun SearchScreen(
                 errorMessage = state.errorMessage,
                 isLoading = state.isLoading,
                 query = state.query,
-                onSearch = { viewModel.search(it) },
+                onSearch = {
+                    focusManager.clearFocus()
+                    viewModel.search(it)
+                },
                 onSearchTextFieldChanged = { viewModel.onSearchTextFieldValueChanged(it) },
                 onCardClick = { navigator.navigate(DetailScreenDestination(it)) }
             )
