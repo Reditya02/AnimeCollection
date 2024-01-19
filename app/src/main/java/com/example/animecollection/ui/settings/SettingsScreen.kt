@@ -91,10 +91,13 @@ fun SettingsContent(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
-        Column {
+        Column(
+            Modifier
+                .padding(it)
+                .padding(12.dp)
+        ) {
             Row(
                 Modifier
-                    .padding(it)
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
