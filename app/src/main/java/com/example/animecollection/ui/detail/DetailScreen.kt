@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -169,7 +171,7 @@ fun CompDetailTopBar(
             title = {
                 if (!scrolled1) {
                     Text(
-                        text = title,
+                        text = title, color = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             },
@@ -179,7 +181,7 @@ fun CompDetailTopBar(
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                             .padding(2.dp),
-                        imageVector = Icons.Default.Star,
+                        imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                         contentDescription = null,
                         tint = if (isFavorite) Color.Yellow else Color.White
                     )
