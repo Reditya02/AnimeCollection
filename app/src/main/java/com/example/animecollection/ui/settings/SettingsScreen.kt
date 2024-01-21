@@ -11,10 +11,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
+import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.ui.destinations.ChangeNameScreenDestination
 import com.example.animecollection.ui.destinations.LoginScreenDestination
 import com.example.animecollection.ui.destinations.SettingsScreenDestination
@@ -45,15 +47,19 @@ fun SettingsScreen(
     ) {
 
         Column {
-            val state = viewModel.isDarkModeState.collectAsState()
+            val state = viewModel.state.collectAsState().value
             SettingsContent(
-                isDarkTheme = state.value,
+                isDarkTheme = state.isDarkMode,
                 switchChecked = {
                     viewModel.changeTheme()
                 },
                 onLogoutClicked = { isOpenDialog = true },
                 onChangeNameClicked = { navigator.value.navigate(ChangeNameScreenDestination) },
-                onChangePhotoClicked = { galleryLauncher.launch("image/*") }
+                onChangePhotoClicked = { galleryLauncher.launch("image/*") },
+                isLoading = state.isLoading,
+                errorMessage = state.errorMessage,
+                isSuccess = state.isUploadSucccess,
+
             )
             if (isOpenDialog) {
                 LogoutAlertDialog(
@@ -78,10 +84,31 @@ fun SettingsContent(
     switchChecked: () -> Unit,
     onLogoutClicked: () -> Unit,
     onChangeNameClicked: () -> Unit,
-    onChangePhotoClicked: () -> Unit
+    onChangePhotoClicked: () -> Unit,
+    isLoading: Boolean,
+    errorMessage: String,
+    isSuccess: Boolean
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val showLoading by remember {
+        mutableStateOf(isLoading)
+    }
+
+    if (showLoading) {
+        Dialog(onDismissRequest = { }) {
+            CompLoadingAnimation()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (errorMessage.isNotEmpty()) {
+            snackbarHostState.showSnackbar(errorMessage)
+        }
+        if (isSuccess) {
+            snackbarHostState.showSnackbar("Change saved")
+        }
+    }
 
     Scaffold(
         topBar = {

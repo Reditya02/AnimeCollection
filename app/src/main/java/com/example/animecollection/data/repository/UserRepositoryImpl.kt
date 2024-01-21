@@ -49,6 +49,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun changeName(name: String) =
         datasource.changeName(name)
 
-    override suspend fun uploadImage(uri: Uri) =
+    override suspend fun uploadImage(uri: Uri): Flow<UIState<Boolean>> =
         datasource.uploadImage(uri)
 }

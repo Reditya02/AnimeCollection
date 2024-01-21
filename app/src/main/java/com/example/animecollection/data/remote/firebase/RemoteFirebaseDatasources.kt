@@ -170,16 +170,21 @@ class RemoteFirebaseDatasources {
             .update("username", name)
     }
 
-    suspend fun uploadImage(uri: Uri) {
+    fun uploadImage(uri: Uri) = flow {
+        emit(UIState.Loading())
         val uid = getUid()
         Firebase.storage.reference
             .child("profile_image")
             .child(uid)
             .putFile(uri).await()
             .storage.downloadUrl.await()
+        emit(UIState.Success(true))
 
         getUserDataInstance()
             .document(uid)
             .update("photo", "profile_image/$uid")
-    }
+
+    }.catch {
+        emit(UIState.Error("Error"))
+    }.flowOn(Dispatchers.IO)
 }

@@ -14,7 +14,7 @@ interface IUserRepository {
     fun logout()
 
     fun changeName(name: String)
-    suspend fun uploadImage(uri: Uri)
+    suspend fun uploadImage(uri: Uri): Flow<UIState<Boolean>>
 
     fun getAllFavorite(id: String?): Flow<UIState<MutableList<Anime>>>
     fun checkIsFavorite(id: String): Flow<UIState<Boolean>>
