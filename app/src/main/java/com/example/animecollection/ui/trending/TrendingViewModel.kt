@@ -24,7 +24,7 @@ class TrendingViewModel @Inject constructor(
         getAllAnime()
     }
 
-    private fun getAllAnime() = viewModelScope.launch {
+    fun getAllAnime() = viewModelScope.launch {
         getAllAnimeUseCase().collectLatest { uiState ->
             when(uiState) {
                 is UIState.Error -> _state.update { it.copy(message = uiState.message ?: "Error") }

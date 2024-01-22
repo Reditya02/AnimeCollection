@@ -4,8 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -41,6 +45,7 @@ fun TrendingScreen(
                 message = state.message,
                 isLoading = state.isLoading,
                 onCardClick = { navigator.value.navigate(DetailScreenDestination(it)) },
+                getAllAnime = { viewModel.getAllAnime() },
                 onSearchClick = { navigator.value.navigate(SearchScreenDestination) }
             )
         }
@@ -53,6 +58,7 @@ fun TrendingContent(
     message: String,
     isLoading: Boolean,
     onCardClick: (Anime) -> Unit,
+    getAllAnime: () -> Unit,
     onSearchClick: () -> Unit
 ) {
     Scaffold(
@@ -74,7 +80,11 @@ fun TrendingContent(
             if (isLoading)
                 CompLoadingAnimation()
             else if (listData.isNotEmpty())
-                ListTrendingAnime(listData = listData) {
+                ListTrendingAnime(
+                    listData = listData,
+                    isLoading = isLoading,
+                    getAllAnime = getAllAnime
+                ) {
                     onCardClick(it)
                 }
             else
@@ -86,16 +96,29 @@ fun TrendingContent(
 @Composable
 fun ListTrendingAnime(
     listData: List<Anime>,
+    isLoading: Boolean = false,
+    getAllAnime: () -> Unit = {},
     onCardClick: (Anime) -> Unit
 ) {
-    LazyColumn(
-        content = {
-            items(listData) {
-                CompListAnime(
-                    modifier = Modifier.clickable { onCardClick(it) },
-                    anime = it
-                )
+    val pullRefreshState = rememberPullRefreshState(isLoading, getAllAnime)
+
+    Box(Modifier.pullRefresh(pullRefreshState)) {
+        LazyColumn(
+            content = {
+                items(listData) {
+                    CompListAnime(
+                        modifier = Modifier.clickable { onCardClick(it) },
+                        anime = it
+                    )
+                }
             }
-        }
-    )
+        )
+
+        PullRefreshIndicator(
+            modifier = Modifier.align(Alignment.TopCenter),
+            refreshing = isLoading,
+            state = pullRefreshState,
+        )
+    }
+
 }

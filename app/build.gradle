@@ -50,7 +50,8 @@ android {
                 "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
                 "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
         ]
     }
     buildFeatures {
@@ -81,6 +82,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    implementation 'androidx.compose.material:material:1.1.1'
 
     //Lottie
     implementation "com.airbnb.android:lottie-compose:5.2.0"
