@@ -15,7 +15,7 @@
     - Clean Architecture using Datasources, Repository, and Use Case
     - Implement SOLID Principle
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - Construct the REST APIs.
-- [Landscapist](https://github.com/skydoves/landscapist) -  Jetpack Compose image loading library which fetches and displays network images with Glide, Coil, and Fresco
+- [Landscapist](https://github.com/skydoves/landscapist) -  Jetpack Compose image loading library which fetches and displays network images with [Coil](https://coil-kt.github.io/coil/compose/)
 - [Lottie](https://github.com/airbnb/lottie/) - Display lottie animation in Jetpack Compose UI.
 - [Destinations](https://github.com/raamcosta/compose-destinations) - Library for navigation in Compose
 
