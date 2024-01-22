@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.animecollection.core.UIState
 import com.example.animecollection.domain.usecase.GetSearchedAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +18,7 @@ class SearchViewModel @Inject constructor(
 
     fun search(query: String) = viewModelScope.launch {
         _state.update { it.copy(isLoading = true) }
-        getSearchedAnimeUseCase(query).collectLatest { uiState ->
+        getSearchedAnimeUseCase(query).debounce(300).collectLatest { uiState ->
             when(uiState) {
                 is UIState.Error -> _state.update { it.copy(errorMessage = uiState.message ?: "Error") }
                 is UIState.Loading -> _state.update { it.copy(isLoading = true) }
@@ -41,5 +38,7 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchTextFieldValueChanged(value: String) {
         _state.update { it.copy(query = value) }
+        if (value.length % 3 == 0 && value.isNotEmpty())
+            search(value)
     }
 }

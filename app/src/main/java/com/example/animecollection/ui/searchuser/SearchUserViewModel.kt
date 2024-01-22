@@ -42,5 +42,6 @@ class SearchUserViewModel @Inject constructor(
 
     fun onSearchTextFieldValueChanged(value: String) {
         _state.update { it.copy(query = value) }
+        search(value)
     }
 }
