@@ -107,7 +107,20 @@ fun DetailContent(
                     )
                 }
                 item {
-                    AnimeTitle(anime = anime)
+                    Row(Modifier.fillMaxWidth()) {
+                        AnimeTitle(anime = anime)
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(onClick = { onFavoriteClicked(anime) }) {
+                            Icon(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                    .padding(2.dp),
+                                imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
+                                contentDescription = null,
+                                tint = if (isFavorite) Color.Yellow else Color.White
+                            )
+                        }
+                    }
                 }
                 item {
                     DetailAnime(anime = anime, character = character, genre = genre)
@@ -176,15 +189,17 @@ fun CompDetailTopBar(
                 }
             },
             actions = {
-                IconButton(onClick = { onFavoriteClicked() }) {
-                    Icon(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.primary, CircleShape)
-                            .padding(2.dp),
-                        imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
-                        contentDescription = null,
-                        tint = if (isFavorite) Color.Yellow else Color.White
-                    )
+                if (!scrolled1) {
+                    IconButton(onClick = { onFavoriteClicked() }) {
+                        Icon(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                .padding(2.dp),
+                            imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
+                            contentDescription = null,
+                            tint = if (isFavorite) Color.Yellow else Color.White
+                        )
+                    }
                 }
             }
         )
@@ -195,20 +210,20 @@ fun CompDetailTopBar(
 fun AnimeTitle(
     anime: Anime
 ) {
-    Text(
-        text = anime.titleEn,
-        style = MaterialTheme.typography.titleLarge
-    )
-    Text(
-        modifier = Modifier
-            .padding(start = 8.dp)
-            .alpha(0.8f),
-        text = anime.titleJp,
-        fontStyle = FontStyle.Italic,
-        style = MaterialTheme.typography.titleMedium
-    )
-
-    Spacer(modifier = Modifier.height(8.dp))
+    Column(Modifier.padding(8.dp)) {
+        Text(
+            text = anime.titleEn,
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .alpha(0.8f),
+            text = anime.titleJp,
+            fontStyle = FontStyle.Italic,
+            style = MaterialTheme.typography.titleMedium
+        )
+    }
 }
 
 @Composable
@@ -231,6 +246,7 @@ fun DetailAnime(
             AsyncImage(
                 modifier = Modifier
                     .weight(4f)
+                    .aspectRatio(0.8f)
                     .clip(MaterialTheme.shapes.medium),
                 model = posterImage,
                 contentDescription = "",
