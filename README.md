@@ -30,7 +30,9 @@
 ## Features
 
 - See most updated information about anime
+- Search any anime you like
 - Save your favorite anime
-- See other favorite anime
+- See others favorite anime
+- Upload your favorite image as your profile image
 
 
