@@ -27,17 +27,10 @@
 - Firestore Database - Store and manage NoSQL database
 - Storage -  Store image on firebase
 
-[//]: # (## Features)
+## Features
 
-[//]: # ()
-[//]: # (* Authentication using JWT token.)
-
-[//]: # (* Generate itinerary based on your budget preferences.)
-
-[//]: # (* Save and customize itinerary.)
-
-[//]: # (* View your tour route in map mode.)
-
-[//]: # (* Explore beautiful destinations in Bali.)
+- See most updated information about anime
+- Save your favorite anime
+- See other favorite anime
 
 
