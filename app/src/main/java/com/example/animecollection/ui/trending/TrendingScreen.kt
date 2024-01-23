@@ -1,10 +1,12 @@
 package com.example.animecollection.ui.trending
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -16,12 +18,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.animecollection.core.navigation.BottomNavGraph
+import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.domain.model.Anime
 import com.example.animecollection.ui.component.CompErrorMessage
 import com.example.animecollection.ui.component.CompListAnime
 import com.example.animecollection.ui.component.CompLoadingAnimation
-import com.example.animecollection.core.navigation.BottomNavGraph
-import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.destinations.DetailScreenDestination
 import com.example.animecollection.ui.destinations.SearchScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination

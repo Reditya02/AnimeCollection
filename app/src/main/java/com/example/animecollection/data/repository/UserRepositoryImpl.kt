@@ -4,7 +4,6 @@ import android.net.Uri
 import com.example.animecollection.core.UIState
 import com.example.animecollection.data.remote.firebase.RemoteFirebaseDatasources
 import com.example.animecollection.domain.model.Anime
-import com.example.animecollection.domain.model.User
 import com.example.animecollection.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -2,7 +2,10 @@ package com.example.animecollection.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +27,7 @@ fun CompListAnime(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(12.dp, 4.dp)
+            .padding(12.dp, 4.dp),
     ) {
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
@@ -54,7 +57,12 @@ fun CompListAnime(
             ) {
                 Text(text = anime.titleEn)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = anime.rating)
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                    Text(text = anime.rating)
+                }
             }
         }
     }

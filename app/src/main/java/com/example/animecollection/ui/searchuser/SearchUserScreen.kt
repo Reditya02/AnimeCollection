@@ -22,7 +22,6 @@ import com.example.animecollection.core.navigation.BottomNavGraph
 import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.domain.model.User
 import com.example.animecollection.ui.component.CompErrorMessage
-import com.example.animecollection.ui.component.CompListAnime
 import com.example.animecollection.ui.component.CompLoadingAnimation
 import com.example.animecollection.ui.component.CompSearchBar
 import com.example.animecollection.ui.destinations.ProfileWithArgumentScreenDestination

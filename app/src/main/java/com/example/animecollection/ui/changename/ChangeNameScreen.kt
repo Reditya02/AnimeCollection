@@ -1,6 +1,5 @@
 package com.example.animecollection.ui.changename
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.animecollection.core.navigation.RootNavigator
 import com.example.animecollection.ui.component.CompButton
 import com.example.animecollection.ui.component.CompEditText
 import com.ramcosta.composedestinations.annotation.Destination
