@@ -29,7 +29,7 @@
 
 ## Features
 
-![](https://youtu.be/BgPdPmdJfVQ?si=unNSMIqJ23MlYcWB)
+![](https://youtu.be/BgPdPmdJfVQ)
 
 - See the most updated information about anime
 - Search for any anime you like
