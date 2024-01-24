@@ -29,7 +29,7 @@
 
 ## Features
 
-[](https://youtu.be/BgPdPmdJfVQ)
+Watch the demo [here](https://youtu.be/BgPdPmdJfVQ)
 
 - See the most updated information about anime
 - Search for any anime you like
