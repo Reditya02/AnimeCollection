@@ -29,7 +29,7 @@
 
 ## Features
 
-Watch the demo [here](https://youtu.be/BgPdPmdJfVQ)
+https://github.com/Reditya02/AnimeCollection/assets/25473095/ec30a872-cad6-407b-abd1-d3bd38a50a38
 
 - See the most updated information about anime
 - Search for any anime you like
